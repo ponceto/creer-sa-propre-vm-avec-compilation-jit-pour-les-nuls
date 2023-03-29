@@ -1,0 +1,939 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="297mm"
+   height="210mm"
+   viewBox="0 0 297 210"
+   version="1.1"
+   id="svg5"
+   sodipodi:docname="rpn-calculator-with-jit.svg"
+   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
+   inkscape:export-filename="/home/oponcet/Projets/emaxilde/repos/talks/creer-sa-propre-vm-avec-compilation-jit-pour-les-nuls/assets/images/interpreter.png"
+   inkscape:export-xdpi="292.71872"
+   inkscape:export-ydpi="292.71872"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="true"
+     inkscape:zoom="1.4917235"
+     inkscape:cx="290.93864"
+     inkscape:cy="361.6622"
+     inkscape:window-width="1920"
+     inkscape:window-height="1049"
+     inkscape:window-x="3840"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1"
+     showguides="true"
+     inkscape:guide-bbox="true"
+     objecttolerance="10"
+     guidetolerance="10000"
+     inkscape:snap-text-baseline="true"
+     gridtolerance="10000">
+    <inkscape:grid
+       type="xygrid"
+       id="grid9"
+       dotted="false" />
+  </sodipodi:namedview>
+  <defs
+     id="defs2">
+    <marker
+       style="overflow:visible"
+       id="DotM"
+       refX="0.0"
+       refY="0.0"
+       orient="auto"
+       inkscape:stockid="DotM"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.4) translate(7.4, 1)"
+         style="fill-rule:evenodd;fill:context-stroke;stroke:context-stroke;stroke-width:1.0pt"
+         d="M -2.5,-1.0 C -2.5,1.7600000 -4.7400000,4.0 -7.5,4.0 C -10.260000,4.0 -12.5,1.7600000 -12.5,-1.0 C -12.5,-3.7600000 -10.260000,-6.0 -7.5,-6.0 C -4.7400000,-6.0 -2.5,-3.7600000 -2.5,-1.0 z "
+         id="path38617" />
+    </marker>
+    <marker
+       style="overflow:visible;"
+       id="Arrow2Mend"
+       refX="0.0"
+       refY="0.0"
+       orient="auto"
+       inkscape:stockid="Arrow2Mend"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.6) rotate(180) translate(0,0)"
+         d="M 8.7185878,4.0337352 L -2.2072895,0.016013256 L 8.7185884,-4.0017078 C 6.9730900,-1.6296469 6.9831476,1.6157441 8.7185878,4.0337352 z "
+         style="stroke:context-stroke;fill-rule:evenodd;fill:context-stroke;stroke-width:0.62500000;stroke-linejoin:round;"
+         id="path38580" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow1Lend"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Lend"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(-0.8,0,0,-0.8,-10,0)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path12562" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow1Lend-3"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Lend"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(-0.8,0,0,-0.8,-10,0)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path12562-4" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow2Mend-5"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Mend"
+       inkscape:isstock="true">
+      <path
+         transform="scale(-0.6)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:0.625;stroke-linejoin:round"
+         id="path38580-9" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="DotM-2"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="DotM"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(0.4,0,0,0.4,2.96,0.4)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="m -2.5,-1 c 0,2.76 -2.24,5 -5,5 -2.76,0 -5,-2.24 -5,-5 0,-2.76 2.24,-5 5,-5 2.76,0 5,2.24 5,5 z"
+         id="path38617-8" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow2Mend-9"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Mend"
+       inkscape:isstock="true">
+      <path
+         transform="scale(-0.6)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:0.625;stroke-linejoin:round"
+         id="path38580-7" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="DotM-2-6"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="DotM"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(0.4,0,0,0.4,2.96,0.4)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="m -2.5,-1 c 0,2.76 -2.24,5 -5,5 -2.76,0 -5,-2.24 -5,-5 0,-2.76 2.24,-5 5,-5 2.76,0 5,2.24 5,5 z"
+         id="path38617-8-1" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow2Mend-9-2"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Mend"
+       inkscape:isstock="true">
+      <path
+         transform="scale(-0.6)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:0.625;stroke-linejoin:round"
+         id="path38580-7-9" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="DotM-2-1"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="DotM"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(0.4,0,0,0.4,2.96,0.4)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="m -2.5,-1 c 0,2.76 -2.24,5 -5,5 -2.76,0 -5,-2.24 -5,-5 0,-2.76 2.24,-5 5,-5 2.76,0 5,2.24 5,5 z"
+         id="path38617-8-9" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow2Mend-9-4"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Mend"
+       inkscape:isstock="true">
+      <path
+         transform="scale(-0.6)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:0.625;stroke-linejoin:round"
+         id="path38580-7-7" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="DotM-2-1-4"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="DotM"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(0.4,0,0,0.4,2.96,0.4)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="m -2.5,-1 c 0,2.76 -2.24,5 -5,5 -2.76,0 -5,-2.24 -5,-5 0,-2.76 2.24,-5 5,-5 2.76,0 5,2.24 5,5 z"
+         id="path38617-8-9-5" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow2Mend-9-4-0"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Mend"
+       inkscape:isstock="true">
+      <path
+         transform="scale(-0.6)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:0.625;stroke-linejoin:round"
+         id="path38580-7-7-3" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="DotM-2-1-1"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="DotM"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(0.4,0,0,0.4,2.96,0.4)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="m -2.5,-1 c 0,2.76 -2.24,5 -5,5 -2.76,0 -5,-2.24 -5,-5 0,-2.76 2.24,-5 5,-5 2.76,0 5,2.24 5,5 z"
+         id="path38617-8-9-0" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow2Mend-9-4-6"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Mend"
+       inkscape:isstock="true">
+      <path
+         transform="scale(-0.6)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:0.625;stroke-linejoin:round"
+         id="path38580-7-7-32" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="DotM-2-1-6"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="DotM"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(0.4,0,0,0.4,2.96,0.4)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="m -2.5,-1 c 0,2.76 -2.24,5 -5,5 -2.76,0 -5,-2.24 -5,-5 0,-2.76 2.24,-5 5,-5 2.76,0 5,2.24 5,5 z"
+         id="path38617-8-9-1" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow2Mend-9-4-5"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Mend"
+       inkscape:isstock="true">
+      <path
+         transform="scale(-0.6)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:0.625;stroke-linejoin:round"
+         id="path38580-7-7-5" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="DotM-2-1-7"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="DotM"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(0.4,0,0,0.4,2.96,0.4)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="m -2.5,-1 c 0,2.76 -2.24,5 -5,5 -2.76,0 -5,-2.24 -5,-5 0,-2.76 2.24,-5 5,-5 2.76,0 5,2.24 5,5 z"
+         id="path38617-8-9-6" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow2Mend-9-4-56"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Mend"
+       inkscape:isstock="true">
+      <path
+         transform="scale(-0.6)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:0.625;stroke-linejoin:round"
+         id="path38580-7-7-9" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="DotM-2-1-74"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="DotM"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(0.4,0,0,0.4,2.96,0.4)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="m -2.5,-1 c 0,2.76 -2.24,5 -5,5 -2.76,0 -5,-2.24 -5,-5 0,-2.76 2.24,-5 5,-5 2.76,0 5,2.24 5,5 z"
+         id="path38617-8-9-52" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow2Mend-9-4-54"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Mend"
+       inkscape:isstock="true">
+      <path
+         transform="scale(-0.6)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:0.625;stroke-linejoin:round"
+         id="path38580-7-7-7" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="DotM-2-1-2"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="DotM"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(0.4,0,0,0.4,2.96,0.4)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="m -2.5,-1 c 0,2.76 -2.24,5 -5,5 -2.76,0 -5,-2.24 -5,-5 0,-2.76 2.24,-5 5,-5 2.76,0 5,2.24 5,5 z"
+         id="path38617-8-9-06" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow2Mend-9-4-8"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Mend"
+       inkscape:isstock="true">
+      <path
+         transform="scale(-0.6)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:0.625;stroke-linejoin:round"
+         id="path38580-7-7-92" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="DotM-2-1-2-4"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="DotM"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(0.4,0,0,0.4,2.96,0.4)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="m -2.5,-1 c 0,2.76 -2.24,5 -5,5 -2.76,0 -5,-2.24 -5,-5 0,-2.76 2.24,-5 5,-5 2.76,0 5,2.24 5,5 z"
+         id="path38617-8-9-06-9" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow2Mend-9-4-8-5"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Mend"
+       inkscape:isstock="true">
+      <path
+         transform="scale(-0.6)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:0.625;stroke-linejoin:round"
+         id="path38580-7-7-92-0" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="DotM-2-1-2-8"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="DotM"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(0.4,0,0,0.4,2.96,0.4)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="m -2.5,-1 c 0,2.76 -2.24,5 -5,5 -2.76,0 -5,-2.24 -5,-5 0,-2.76 2.24,-5 5,-5 2.76,0 5,2.24 5,5 z"
+         id="path38617-8-9-06-7" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow2Mend-9-4-8-1"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Mend"
+       inkscape:isstock="true">
+      <path
+         transform="scale(-0.6)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:0.625;stroke-linejoin:round"
+         id="path38580-7-7-92-7" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="DotM-2-1-7-3"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="DotM"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(0.4,0,0,0.4,2.96,0.4)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="m -2.5,-1 c 0,2.76 -2.24,5 -5,5 -2.76,0 -5,-2.24 -5,-5 0,-2.76 2.24,-5 5,-5 2.76,0 5,2.24 5,5 z"
+         id="path38617-8-9-6-6" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow2Mend-9-4-56-7"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Mend"
+       inkscape:isstock="true">
+      <path
+         transform="scale(-0.6)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:0.625;stroke-linejoin:round"
+         id="path38580-7-7-9-5" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="DotM-2-1-6-5"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="DotM"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(0.4,0,0,0.4,2.96,0.4)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="m -2.5,-1 c 0,2.76 -2.24,5 -5,5 -2.76,0 -5,-2.24 -5,-5 0,-2.76 2.24,-5 5,-5 2.76,0 5,2.24 5,5 z"
+         id="path38617-8-9-1-6" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow2Mend-9-4-5-2"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Mend"
+       inkscape:isstock="true">
+      <path
+         transform="scale(-0.6)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:0.625;stroke-linejoin:round"
+         id="path38580-7-7-5-9" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="DotM-2-1-7-3-2"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="DotM"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(0.4,0,0,0.4,2.96,0.4)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="m -2.5,-1 c 0,2.76 -2.24,5 -5,5 -2.76,0 -5,-2.24 -5,-5 0,-2.76 2.24,-5 5,-5 2.76,0 5,2.24 5,5 z"
+         id="path38617-8-9-6-6-7" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow2Mend-9-4-56-7-0"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Mend"
+       inkscape:isstock="true">
+      <path
+         transform="scale(-0.6)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:0.625;stroke-linejoin:round"
+         id="path38580-7-7-9-5-9" />
+    </marker>
+  </defs>
+  <g
+     inkscape:label="Calque 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       style="fill:#f9f9f9;fill-rule:evenodd;stroke:#000000;stroke-width:0.12734;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect13285"
+       width="178.83977"
+       height="100.54166"
+       x="2.7644179"
+       y="2.6458333"
+       ry="5.5856481"
+       inkscape:export-filename="/home/oponcet/Projets/emaxilde/repos/talks/creer-sa-propre-vm-avec-compilation-jit-pour-les-nuls/assets/images/rpn-calculator-with-jit.png"
+       inkscape:export-xdpi="258.36755"
+       inkscape:export-ydpi="258.36755" />
+    <g
+       id="g36776"
+       transform="translate(66.145836,-103.18751)"
+       inkscape:export-filename="/home/oponcet/Projets/emaxilde/repos/talks/creer-sa-propre-vm-avec-compilation-jit-pour-les-nuls/assets/images/rpn-calculator-with-jit.png"
+       inkscape:export-xdpi="258.36755"
+       inkscape:export-ydpi="258.36755">
+      <rect
+         style="fill:#cccccc;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.05;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="rect33-6-5-6-6-7"
+         width="26.458336"
+         height="13.229167"
+         x="7.9374967"
+         y="113.77084"
+         ry="1.4699074"
+         inkscape:export-filename="/home/oponcet/Projets/emaxilde/repos/talks/creer-sa-propre-vm-avec-compilation-jit-pour-les-nuls/assets/inkscape/rect33.png"
+         inkscape:export-xdpi="599.08423"
+         inkscape:export-ydpi="599.08423" />
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-weight:normal;font-size:2.82222px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+         x="15.194252"
+         y="121.12061"
+         id="text7520-7-6-0-1-9"><tspan
+           sodipodi:role="line"
+           id="tspan7518-5-2-6-8-2"
+           style="font-size:2.82222px;stroke-width:0.264583"
+           x="15.194252"
+           y="121.12061">Program</tspan></text>
+    </g>
+    <g
+       id="g36771"
+       transform="translate(103.1875,-88.635414)"
+       inkscape:export-filename="/home/oponcet/Projets/emaxilde/repos/talks/creer-sa-propre-vm-avec-compilation-jit-pour-les-nuls/assets/images/rpn-calculator-with-jit.png"
+       inkscape:export-xdpi="258.36755"
+       inkscape:export-ydpi="258.36755">
+      <rect
+         style="fill:#cccccc;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.05;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="rect33-6-5-6-6"
+         width="26.458336"
+         height="13.229167"
+         x="7.9374976"
+         y="99.21875"
+         ry="1.4699074"
+         inkscape:export-filename="/home/oponcet/Projets/emaxilde/repos/talks/creer-sa-propre-vm-avec-compilation-jit-pour-les-nuls/assets/inkscape/rect33.png"
+         inkscape:export-xdpi="599.08423"
+         inkscape:export-ydpi="599.08423" />
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-weight:normal;font-size:2.82222px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+         x="15.56081"
+         y="106.88547"
+         id="text7520-7-6-0-1"><tspan
+           sodipodi:role="line"
+           id="tspan7518-5-2-6-8"
+           style="font-size:2.82222px;stroke-width:0.264583"
+           x="15.56081"
+           y="106.88547">Console</tspan></text>
+    </g>
+    <g
+       id="g26839"
+       transform="translate(103.1875,7.9374999)"
+       inkscape:export-filename="/home/oponcet/Projets/emaxilde/repos/talks/creer-sa-propre-vm-avec-compilation-jit-pour-les-nuls/assets/images/rpn-calculator-with-jit.png"
+       inkscape:export-xdpi="258.36755"
+       inkscape:export-ydpi="258.36755">
+      <rect
+         style="fill:#cccccc;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.05;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="rect33-6"
+         width="26.458336"
+         height="13.229167"
+         x="7.9375"
+         y="26.458334"
+         ry="1.4699074"
+         inkscape:export-filename="/home/oponcet/Projets/emaxilde/repos/talks/creer-sa-propre-vm-avec-compilation-jit-pour-les-nuls/assets/inkscape/rect33.png"
+         inkscape:export-xdpi="599.08423"
+         inkscape:export-ydpi="599.08423" />
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-weight:normal;font-size:2.82222px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+         x="16.612255"
+         y="34.081642"
+         id="text7520-7"><tspan
+           sodipodi:role="line"
+           id="tspan7518-5"
+           style="font-size:2.82222px;stroke-width:0.264583"
+           x="16.612255"
+           y="34.081642">Parser</tspan></text>
+    </g>
+    <g
+       id="g26834"
+       transform="translate(66.145832,22.489586)"
+       inkscape:export-filename="/home/oponcet/Projets/emaxilde/repos/talks/creer-sa-propre-vm-avec-compilation-jit-pour-les-nuls/assets/images/rpn-calculator-with-jit.png"
+       inkscape:export-xdpi="258.36755"
+       inkscape:export-ydpi="258.36755">
+      <rect
+         style="fill:#cccccc;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.05;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="rect33"
+         width="26.458336"
+         height="13.229167"
+         x="7.9374981"
+         y="11.906246"
+         ry="1.4699074"
+         inkscape:export-filename="/home/oponcet/Projets/emaxilde/repos/talks/creer-sa-propre-vm-avec-compilation-jit-pour-les-nuls/assets/inkscape/rect33.png"
+         inkscape:export-xdpi="599.08423"
+         inkscape:export-ydpi="599.08423" />
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-weight:normal;font-size:2.82222px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+         x="13.921636"
+         y="19.572962"
+         id="text7520"><tspan
+           sodipodi:role="line"
+           id="tspan7518"
+           style="font-size:2.82222px;stroke-width:0.264583"
+           x="13.921636"
+           y="19.572962">Calculator</tspan></text>
+    </g>
+    <g
+       id="g26844"
+       transform="translate(103.1875,41.010419)"
+       inkscape:export-filename="/home/oponcet/Projets/emaxilde/repos/talks/creer-sa-propre-vm-avec-compilation-jit-pour-les-nuls/assets/images/rpn-calculator-with-jit.png"
+       inkscape:export-xdpi="258.36755"
+       inkscape:export-ydpi="258.36755">
+      <rect
+         style="fill:#cccccc;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.05;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="rect33-6-5-9-7"
+         width="26.458336"
+         height="13.229167"
+         x="7.9375019"
+         y="41.010414"
+         ry="1.4699074"
+         inkscape:export-filename="/home/oponcet/Projets/emaxilde/repos/talks/creer-sa-propre-vm-avec-compilation-jit-pour-les-nuls/assets/inkscape/rect33.png"
+         inkscape:export-xdpi="599.08423"
+         inkscape:export-ydpi="599.08423" />
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-weight:normal;font-size:2.82222px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+         x="14.266149"
+         y="48.403587"
+         id="text7520-7-6-1-0"><tspan
+           sodipodi:role="line"
+           id="tspan7518-5-2-2-9"
+           style="font-size:2.82222px;stroke-width:0.264583"
+           x="14.266149"
+           y="48.403587">ByteCode</tspan></text>
+    </g>
+    <g
+       id="g26849"
+       transform="translate(29.104162,-21.166667)"
+       inkscape:export-filename="/home/oponcet/Projets/emaxilde/repos/talks/creer-sa-propre-vm-avec-compilation-jit-pour-les-nuls/assets/images/rpn-calculator-with-jit.png"
+       inkscape:export-xdpi="258.36755"
+       inkscape:export-ydpi="258.36755">
+      <rect
+         style="fill:#cccccc;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.05;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="rect33-6-5-9"
+         width="26.458336"
+         height="13.229167"
+         x="7.9375052"
+         y="55.5625"
+         ry="1.4699074"
+         inkscape:export-filename="/home/oponcet/Projets/emaxilde/repos/talks/creer-sa-propre-vm-avec-compilation-jit-pour-les-nuls/assets/inkscape/rect33.png"
+         inkscape:export-xdpi="599.08423"
+         inkscape:export-ydpi="599.08423" />
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-weight:normal;font-size:2.82222px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+         x="14.277865"
+         y="63.229214"
+         id="text7520-7-6-1"><tspan
+           sodipodi:role="line"
+           id="tspan7518-5-2-2"
+           style="font-size:2.82222px;stroke-width:0.264583"
+           x="14.277865"
+           y="63.229214">HostCode</tspan></text>
+    </g>
+    <g
+       id="g38437"
+       transform="translate(66.145832,-70.114588)"
+       inkscape:export-filename="/home/oponcet/Projets/emaxilde/repos/talks/creer-sa-propre-vm-avec-compilation-jit-pour-les-nuls/assets/images/rpn-calculator-with-jit.png"
+       inkscape:export-xdpi="258.36755"
+       inkscape:export-ydpi="258.36755">
+      <rect
+         style="fill:#cccccc;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.05;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="rect33-6-5-6-6-7-2"
+         width="26.458336"
+         height="13.229167"
+         x="7.9375"
+         y="128.32292"
+         ry="1.4699074"
+         inkscape:export-filename="/home/oponcet/Projets/emaxilde/repos/talks/creer-sa-propre-vm-avec-compilation-jit-pour-les-nuls/assets/inkscape/rect33.png"
+         inkscape:export-xdpi="599.08423"
+         inkscape:export-ydpi="599.08423" />
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-weight:normal;font-size:2.82222px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+         x="17.413584"
+         y="135.96483"
+         id="text7520-7-6-0-1-9-3"><tspan
+           sodipodi:role="line"
+           id="tspan7518-5-2-6-8-2-7"
+           style="font-size:2.82222px;stroke-width:0.264583"
+           x="17.413584"
+           y="135.96483">State</tspan></text>
+    </g>
+    <g
+       id="g26854"
+       transform="translate(103.1875,-11.90625)"
+       inkscape:export-filename="/home/oponcet/Projets/emaxilde/repos/talks/creer-sa-propre-vm-avec-compilation-jit-pour-les-nuls/assets/images/rpn-calculator-with-jit.png"
+       inkscape:export-xdpi="258.36755"
+       inkscape:export-ydpi="258.36755">
+      <rect
+         style="fill:#cccccc;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.05;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="rect33-6-5"
+         width="26.458336"
+         height="13.229167"
+         x="7.9375043"
+         y="70.114586"
+         ry="1.4699074"
+         inkscape:export-filename="/home/oponcet/Projets/emaxilde/repos/talks/creer-sa-propre-vm-avec-compilation-jit-pour-les-nuls/assets/inkscape/rect33.png"
+         inkscape:export-xdpi="599.08423"
+         inkscape:export-ydpi="599.08423" />
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-weight:normal;font-size:2.82222px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+         x="14.736062"
+         y="77.507759"
+         id="text7520-7-6"><tspan
+           sodipodi:role="line"
+           id="tspan7518-5-2"
+           style="font-size:2.82222px;stroke-width:0.264583"
+           x="14.736062"
+           y="77.507759">Compiler</tspan></text>
+    </g>
+    <g
+       id="g4405"
+       inkscape:export-filename="/home/oponcet/Projets/emaxilde/repos/talks/creer-sa-propre-vm-avec-compilation-jit-pour-les-nuls/assets/images/rpn-calculator-with-jit.png"
+       inkscape:export-xdpi="258.36755"
+       inkscape:export-ydpi="258.36755">
+      <rect
+         style="fill:#cccccc;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.05;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="rect33-6-5-6"
+         width="26.458336"
+         height="13.229167"
+         x="37.041664"
+         y="58.208336"
+         ry="1.4699074"
+         inkscape:export-filename="/home/oponcet/Projets/emaxilde/repos/talks/creer-sa-propre-vm-avec-compilation-jit-pour-les-nuls/assets/inkscape/rect33.png"
+         inkscape:export-xdpi="599.08423"
+         inkscape:export-ydpi="599.08423" />
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-weight:normal;font-size:2.82222px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+         x="44.250187"
+         y="65.875053"
+         id="text7520-7-6-0"><tspan
+           sodipodi:role="line"
+           id="tspan7518-5-2-6"
+           style="font-size:2.82222px;stroke-width:0.264583"
+           x="44.250187"
+           y="65.875053">Function</tspan></text>
+    </g>
+    <g
+       id="g21534-3"
+       transform="translate(29.104164,-2.6458308)"
+       inkscape:export-filename="/home/oponcet/Projets/emaxilde/repos/talks/creer-sa-propre-vm-avec-compilation-jit-pour-les-nuls/assets/images/rpn-calculator-with-jit.png"
+       inkscape:export-xdpi="258.36755"
+       inkscape:export-ydpi="258.36755">
+      <rect
+         style="fill:#cccccc;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.05;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="rect33-6-5-6-67"
+         width="26.458336"
+         height="13.229167"
+         x="7.9375"
+         y="84.666664"
+         ry="1.4699074"
+         inkscape:export-filename="/home/oponcet/Projets/emaxilde/repos/talks/creer-sa-propre-vm-avec-compilation-jit-pour-les-nuls/assets/inkscape/rect33.png"
+         inkscape:export-xdpi="599.08423"
+         inkscape:export-ydpi="599.08423" />
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-weight:normal;font-size:2.82222px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+         x="13.479977"
+         y="92.333382"
+         id="text7520-7-6-0-5"><tspan
+           sodipodi:role="line"
+           id="tspan7518-5-2-6-3"
+           style="font-size:2.82222px;stroke-width:0.264583"
+           x="13.479977"
+           y="92.333382">BasicBlock</tspan></text>
+    </g>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264582px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-start:url(#DotM-2-1);marker-end:url(#Arrow2Mend-9-4)"
+       d="M 124.35417,71.4375 V 82.020833"
+       id="path11468-3-8"
+       sodipodi:nodetypes="cc"
+       inkscape:export-filename="/home/oponcet/Projets/emaxilde/repos/talks/creer-sa-propre-vm-avec-compilation-jit-pour-les-nuls/assets/images/rpn-calculator-with-jit.png"
+       inkscape:export-xdpi="258.36755"
+       inkscape:export-ydpi="258.36755" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264582px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-start:url(#DotM-2-1-1);marker-end:url(#Arrow2Mend-9-4-6)"
+       d="M 99.218751,47.625 111.65417,82.285417"
+       id="path11468-3-8-0"
+       sodipodi:nodetypes="cc"
+       inkscape:export-filename="/home/oponcet/Projets/emaxilde/repos/talks/creer-sa-propre-vm-avec-compilation-jit-pour-les-nuls/assets/images/rpn-calculator-with-jit.png"
+       inkscape:export-xdpi="258.36755"
+       inkscape:export-ydpi="258.36755" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264582px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-start:url(#DotM-2-1-2-4);marker-end:url(#Arrow2Mend-9-4-8-5)"
+       d="M 124.35417,58.208333 V 47.625"
+       id="path11468-3-8-66-4"
+       sodipodi:nodetypes="cc"
+       inkscape:export-filename="/home/oponcet/Projets/emaxilde/repos/talks/creer-sa-propre-vm-avec-compilation-jit-pour-les-nuls/assets/images/rpn-calculator-with-jit.png"
+       inkscape:export-xdpi="258.36755"
+       inkscape:export-ydpi="258.36755" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264582px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-start:url(#DotM-2-1-74);marker-end:url(#Arrow2Mend-9-4-54)"
+       d="m 100.54167,46.302083 11.1125,12.170834"
+       id="path11468-3-8-44"
+       sodipodi:nodetypes="cc"
+       inkscape:export-filename="/home/oponcet/Projets/emaxilde/repos/talks/creer-sa-propre-vm-avec-compilation-jit-pour-les-nuls/assets/images/rpn-calculator-with-jit.png"
+       inkscape:export-xdpi="258.36755"
+       inkscape:export-ydpi="258.36755" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264582px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-start:url(#DotM-2-1-7);marker-end:url(#Arrow2Mend-9-4-56)"
+       d="m 100.54167,43.65625 c 3.48112,1.722426 7.00666,1.804953 10.58333,0"
+       id="path11468-3-8-3"
+       sodipodi:nodetypes="cc"
+       inkscape:export-filename="/home/oponcet/Projets/emaxilde/repos/talks/creer-sa-propre-vm-avec-compilation-jit-pour-les-nuls/assets/images/rpn-calculator-with-jit.png"
+       inkscape:export-xdpi="258.36755"
+       inkscape:export-ydpi="258.36755" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264582;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:0.529164, 0.529164;stroke-dashoffset:0;stroke-opacity:1;marker-start:url(#DotM-2-1-7-3);marker-end:url(#Arrow2Mend-9-4-56-7)"
+       d="m 111.125,38.364583 c -3.5896,-1.815283 -7.11385,-1.71187 -10.58333,0"
+       id="path11468-3-8-3-3"
+       sodipodi:nodetypes="cc"
+       inkscape:export-filename="/home/oponcet/Projets/emaxilde/repos/talks/creer-sa-propre-vm-avec-compilation-jit-pour-les-nuls/assets/images/rpn-calculator-with-jit.png"
+       inkscape:export-xdpi="258.36755"
+       inkscape:export-ydpi="258.36755" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264582;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:0.529164, 0.529164;stroke-dashoffset:0;stroke-opacity:1;marker-start:url(#DotM-2-1-7-3-2);marker-end:url(#Arrow2Mend-9-4-56-7-0)"
+       d="M 74.6125,47.095833 C 71.4375,67.46875 68.791667,71.4375 62.970833,82.55"
+       id="path11468-3-8-3-3-3"
+       sodipodi:nodetypes="cc"
+       inkscape:export-filename="/home/oponcet/Projets/emaxilde/repos/talks/creer-sa-propre-vm-avec-compilation-jit-pour-les-nuls/assets/images/rpn-calculator-with-jit.png"
+       inkscape:export-xdpi="258.36755"
+       inkscape:export-ydpi="258.36755" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264582px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-start:url(#DotM-2-6);marker-end:url(#Arrow2Mend-9-2)"
+       d="M 100.0125,34.925 111.38958,23.547917"
+       id="path11468-3-3"
+       sodipodi:nodetypes="cc"
+       inkscape:export-filename="/home/oponcet/Projets/emaxilde/repos/talks/creer-sa-propre-vm-avec-compilation-jit-pour-les-nuls/assets/images/rpn-calculator-with-jit.png"
+       inkscape:export-xdpi="258.36755"
+       inkscape:export-ydpi="258.36755" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264582px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-start:url(#DotM);marker-end:url(#Arrow2Mend)"
+       d="M 100.54167,17.197917 H 111.125"
+       id="path11468"
+       sodipodi:nodetypes="cc"
+       inkscape:export-filename="/home/oponcet/Projets/emaxilde/repos/talks/creer-sa-propre-vm-avec-compilation-jit-pour-les-nuls/assets/images/rpn-calculator-with-jit.png"
+       inkscape:export-xdpi="258.36755"
+       inkscape:export-ydpi="258.36755" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264582px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-start:url(#DotM-2);marker-end:url(#Arrow2Mend-9)"
+       d="M 87.312501,23.8125 V 34.395833"
+       id="path11468-3"
+       sodipodi:nodetypes="cc"
+       inkscape:export-filename="/home/oponcet/Projets/emaxilde/repos/talks/creer-sa-propre-vm-avec-compilation-jit-pour-les-nuls/assets/images/rpn-calculator-with-jit.png"
+       inkscape:export-xdpi="258.36755"
+       inkscape:export-ydpi="258.36755" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264582px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-start:url(#DotM-2-1-6);marker-end:url(#Arrow2Mend-9-4-5)"
+       d="M 87.312501,47.625 V 58.208333"
+       id="path11468-3-8-4"
+       sodipodi:nodetypes="cc"
+       inkscape:export-filename="/home/oponcet/Projets/emaxilde/repos/talks/creer-sa-propre-vm-avec-compilation-jit-pour-les-nuls/assets/images/rpn-calculator-with-jit.png"
+       inkscape:export-xdpi="258.36755"
+       inkscape:export-ydpi="258.36755" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264582px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-start:url(#DotM-2-1-6-5);marker-end:url(#Arrow2Mend-9-4-5-2)"
+       d="M 50.270833,71.4375 V 82.020833"
+       id="path11468-3-8-4-1"
+       sodipodi:nodetypes="cc"
+       inkscape:export-filename="/home/oponcet/Projets/emaxilde/repos/talks/creer-sa-propre-vm-avec-compilation-jit-pour-les-nuls/assets/images/rpn-calculator-with-jit.png"
+       inkscape:export-xdpi="258.36755"
+       inkscape:export-ydpi="258.36755" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264582px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-start:url(#DotM-2-1-4);marker-end:url(#Arrow2Mend-9-4-0)"
+       d="M 74.083335,41.010417 H 63.500001"
+       id="path11468-3-8-6"
+       sodipodi:nodetypes="cc"
+       inkscape:export-filename="/home/oponcet/Projets/emaxilde/repos/talks/creer-sa-propre-vm-avec-compilation-jit-pour-les-nuls/assets/images/rpn-calculator-with-jit.png"
+       inkscape:export-xdpi="258.36755"
+       inkscape:export-ydpi="258.36755" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264582px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-start:url(#DotM-2-1-2);marker-end:url(#Arrow2Mend-9-4-8)"
+       d="M 50.270835,58.208333 V 47.625"
+       id="path11468-3-8-66"
+       sodipodi:nodetypes="cc"
+       inkscape:export-filename="/home/oponcet/Projets/emaxilde/repos/talks/creer-sa-propre-vm-avec-compilation-jit-pour-les-nuls/assets/images/rpn-calculator-with-jit.png"
+       inkscape:export-xdpi="258.36755"
+       inkscape:export-ydpi="258.36755" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264582px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-start:url(#DotM-2-1-2-8);marker-end:url(#Arrow2Mend-9-4-8-1)"
+       d="M 74.612501,47.095833 63.235418,58.7375"
+       id="path11468-3-8-66-2"
+       sodipodi:nodetypes="cc"
+       inkscape:export-filename="/home/oponcet/Projets/emaxilde/repos/talks/creer-sa-propre-vm-avec-compilation-jit-pour-les-nuls/assets/images/rpn-calculator-with-jit.png"
+       inkscape:export-xdpi="258.36755"
+       inkscape:export-ydpi="258.36755" />
+  </g>
+</svg>

@@ -1,0 +1,212 @@
+img.h128 {
+    height: 128px;
+}
+
+img.h160 {
+    height: 160px;
+}
+
+img.h192 {
+    height: 192px;
+}
+
+img.h224 {
+    height: 224px;
+}
+
+img.h256 {
+    height: 256px;
+}
+
+img.h288 {
+    height: 288px;
+}
+
+img.h320 {
+    height: 320px;
+}
+
+img.h352 {
+    height: 352px;
+}
+
+img.h384 {
+    height: 384px;
+}
+
+img.h416 {
+    height: 416px;
+}
+
+img.h448 {
+    height: 448px;
+}
+
+img.h480 {
+    height: 480px;
+}
+
+img.h512 {
+    height: 512px;
+}
+
+table.about {
+    border: none;
+    font-family: monospace;
+    font-size: smaller;
+}
+
+table.about tr {
+    border: none;
+}
+
+table.about td {
+    border: none;
+}
+
+.rounded-corners-8 {
+    border-radius: 8px;
+}
+
+.rounded-corners-16 {
+    border-radius: 16px;
+}
+
+.rounded-corners-24 {
+    border-radius: 24px;
+}
+
+.rounded-corners-32 {
+    border-radius: 32px;
+}
+
+.rounded-corners-40 {
+    border-radius: 40px;
+}
+
+.rounded-corners-48 {
+    border-radius: 48px;
+}
+
+.rounded-corners-56 {
+    border-radius: 56px;
+}
+
+.rounded-corners-64 {
+    border-radius: 64px;
+}
+
+.color-website {
+    color: #88aaff !important;
+}
+
+.color-dummies {
+    color: #ffec00 !important;
+}
+
+.color-twitter {
+    color: #1d9bf0 !important;
+}
+
+.color-github {
+    color: #f8f8f8 !important;
+}
+
+.color-gitlab {
+    color: #fc6d26 !important;
+}
+
+.color-bitbucket {
+    color: #2684ff !important;
+}
+
+.color-twitch {
+    color: #a970ff !important;
+}
+
+.color-youtube {
+    color: #ff0000 !important;
+}
+
+.is-centered {
+    text-align: center !important;
+}
+
+.is-justified {
+    text-align: justify !important;
+}
+
+.color-red {
+    color: #ff0000 !important;
+}
+
+.color-green {
+    color: #00ff00 !important;
+}
+
+.color-blue {
+    color: #0000ff !important;
+}
+
+.color-chartreuse {
+    color: chartreuse !important;
+}
+
+.custom-code {
+    line-height: normal !important;
+    font-size: 14px !important;
+    min-height: 512px !important;
+    max-height: 1080px !important;
+}
+
+.text-overlay {
+    font-size: 90px;
+    font-weight: bold;
+    z-index: 10;
+}
+
+.huge-font {
+    font-size: 90px;
+}
+
+.fragment.blur {
+    filter: blur(75px);
+}
+
+.fragment.blur.visible {
+    filter: none;
+}
+
+.reveal .fragment.highlight-current-yellow {
+    opacity: 1;
+    visibility: inherit;
+}
+
+.reveal .fragment.highlight-yellow.visible {
+    color: #ffec00;
+}
+
+.reveal .fragment.highlight-current-yellow.current-fragment {
+    color: #ffec00;
+}
+
+.reveal .fragment.highlight-current-white {
+    opacity: 1;
+    visibility: inherit;
+}
+
+.reveal .fragment.highlight-white.visible {
+    color: #ffffff;
+}
+
+.reveal .fragment.highlight-current-white.current-fragment {
+    color: #ffffff;
+}
+
+.reveal .highlight-line {
+    font-weight: bolder !important;
+}
+
+.reveal .hljs.has-highlights tr:not(.highlight-line) {
+	opacity: 0.1;
+}

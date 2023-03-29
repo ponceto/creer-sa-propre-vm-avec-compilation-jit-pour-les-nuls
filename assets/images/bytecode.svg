@@ -1,0 +1,1124 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="297mm"
+   height="210mm"
+   viewBox="0 0 297 210"
+   version="1.1"
+   id="svg5"
+   sodipodi:docname="bytecode.svg"
+   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
+   inkscape:export-filename="/home/oponcet/Projets/emaxilde/repos/talks/creer-sa-propre-vm-avec-compilation-jit-pour-les-nuls/assets/images/interpreter.png"
+   inkscape:export-xdpi="292.71872"
+   inkscape:export-ydpi="292.71872"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="true"
+     inkscape:zoom="4.6334618"
+     inkscape:cx="36.905452"
+     inkscape:cy="64.962228"
+     inkscape:window-width="1920"
+     inkscape:window-height="994"
+     inkscape:window-x="0"
+     inkscape:window-y="28"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1"
+     showguides="true"
+     inkscape:guide-bbox="true"
+     objecttolerance="10"
+     guidetolerance="10000"
+     inkscape:snap-text-baseline="true"
+     gridtolerance="10000">
+    <inkscape:grid
+       type="xygrid"
+       id="grid9"
+       dotted="false" />
+  </sodipodi:namedview>
+  <defs
+     id="defs2">
+    <marker
+       style="overflow:visible"
+       id="Arrow2Sstart"
+       refX="0.0"
+       refY="0.0"
+       orient="auto"
+       inkscape:stockid="Arrow2Sstart"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.3) translate(-2.3,0)"
+         d="M 8.7185878,4.0337352 L -2.2072895,0.016013256 L 8.7185884,-4.0017078 C 6.9730900,-1.6296469 6.9831476,1.6157441 8.7185878,4.0337352 z "
+         style="stroke:context-stroke;fill-rule:evenodd;fill:context-stroke;stroke-width:0.62500000;stroke-linejoin:round"
+         id="path37299" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow2Mstart"
+       refX="0.0"
+       refY="0.0"
+       orient="auto"
+       inkscape:stockid="Arrow2Mstart"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.6) translate(0,0)"
+         d="M 8.7185878,4.0337352 L -2.2072895,0.016013256 L 8.7185884,-4.0017078 C 6.9730900,-1.6296469 6.9831476,1.6157441 8.7185878,4.0337352 z "
+         style="stroke:context-stroke;fill-rule:evenodd;fill:context-stroke;stroke-width:0.62500000;stroke-linejoin:round"
+         id="path2047" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow2Lstart"
+       refX="0.0"
+       refY="0.0"
+       orient="auto"
+       inkscape:stockid="Arrow2Lstart"
+       inkscape:isstock="true">
+      <path
+         transform="scale(1.1) translate(1,0)"
+         d="M 8.7185878,4.0337352 L -2.2072895,0.016013256 L 8.7185884,-4.0017078 C 6.9730900,-1.6296469 6.9831476,1.6157441 8.7185878,4.0337352 z "
+         style="stroke:context-stroke;fill-rule:evenodd;fill:context-stroke;stroke-width:0.62500000;stroke-linejoin:round"
+         id="path2041" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow1Mstart"
+       refX="0.0"
+       refY="0.0"
+       orient="auto"
+       inkscape:stockid="Arrow1Mstart"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.4) translate(10,0)"
+         style="fill-rule:evenodd;fill:context-stroke;stroke:context-stroke;stroke-width:1.0pt"
+         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
+         id="path2029" />
+    </marker>
+    <marker
+       style="overflow:visible;"
+       id="marker35150"
+       refX="0.0"
+       refY="0.0"
+       orient="auto"
+       inkscape:stockid="Arrow1Send"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.2) rotate(180) translate(6,0)"
+         style="fill-rule:evenodd;fill:context-stroke;stroke:context-stroke;stroke-width:1.0pt;"
+         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
+         id="path35148" />
+    </marker>
+    <marker
+       style="overflow:visible;"
+       id="Arrow1Send"
+       refX="0.0"
+       refY="0.0"
+       orient="auto"
+       inkscape:stockid="Arrow1Send"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.2) rotate(180) translate(6,0)"
+         style="fill-rule:evenodd;fill:context-stroke;stroke:context-stroke;stroke-width:1.0pt;"
+         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
+         id="path34760" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="DotM"
+       refX="0.0"
+       refY="0.0"
+       orient="auto"
+       inkscape:stockid="DotM"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.4) translate(7.4, 1)"
+         style="fill-rule:evenodd;fill:context-stroke;stroke:context-stroke;stroke-width:1.0pt"
+         d="M -2.5,-1.0 C -2.5,1.7600000 -4.7400000,4.0 -7.5,4.0 C -10.260000,4.0 -12.5,1.7600000 -12.5,-1.0 C -12.5,-3.7600000 -10.260000,-6.0 -7.5,-6.0 C -4.7400000,-6.0 -2.5,-3.7600000 -2.5,-1.0 z "
+         id="path38617" />
+    </marker>
+    <marker
+       style="overflow:visible;"
+       id="Arrow2Mend"
+       refX="0.0"
+       refY="0.0"
+       orient="auto"
+       inkscape:stockid="Arrow2Mend"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.6) rotate(180) translate(0,0)"
+         d="M 8.7185878,4.0337352 L -2.2072895,0.016013256 L 8.7185884,-4.0017078 C 6.9730900,-1.6296469 6.9831476,1.6157441 8.7185878,4.0337352 z "
+         style="stroke:context-stroke;fill-rule:evenodd;fill:context-stroke;stroke-width:0.62500000;stroke-linejoin:round;"
+         id="path38580" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow1Lend"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Lend"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(-0.8,0,0,-0.8,-10,0)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path12562" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow1Lend-3"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Lend"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(-0.8,0,0,-0.8,-10,0)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path12562-4" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow2Mend-5"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Mend"
+       inkscape:isstock="true">
+      <path
+         transform="scale(-0.6)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:0.625;stroke-linejoin:round"
+         id="path38580-9" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="DotM-2"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="DotM"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(0.4,0,0,0.4,2.96,0.4)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="m -2.5,-1 c 0,2.76 -2.24,5 -5,5 -2.76,0 -5,-2.24 -5,-5 0,-2.76 2.24,-5 5,-5 2.76,0 5,2.24 5,5 z"
+         id="path38617-8" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow2Mend-9"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Mend"
+       inkscape:isstock="true">
+      <path
+         transform="scale(-0.6)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:0.625;stroke-linejoin:round"
+         id="path38580-7" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="DotM-2-6"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="DotM"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(0.4,0,0,0.4,2.96,0.4)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="m -2.5,-1 c 0,2.76 -2.24,5 -5,5 -2.76,0 -5,-2.24 -5,-5 0,-2.76 2.24,-5 5,-5 2.76,0 5,2.24 5,5 z"
+         id="path38617-8-1" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow2Mend-9-2"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Mend"
+       inkscape:isstock="true">
+      <path
+         transform="scale(-0.6)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:0.625;stroke-linejoin:round"
+         id="path38580-7-9" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="DotM-2-1"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="DotM"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(0.4,0,0,0.4,2.96,0.4)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="m -2.5,-1 c 0,2.76 -2.24,5 -5,5 -2.76,0 -5,-2.24 -5,-5 0,-2.76 2.24,-5 5,-5 2.76,0 5,2.24 5,5 z"
+         id="path38617-8-9" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow2Mend-9-4"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Mend"
+       inkscape:isstock="true">
+      <path
+         transform="scale(-0.6)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:0.625;stroke-linejoin:round"
+         id="path38580-7-7" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="DotM-2-1-4"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="DotM"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(0.4,0,0,0.4,2.96,0.4)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="m -2.5,-1 c 0,2.76 -2.24,5 -5,5 -2.76,0 -5,-2.24 -5,-5 0,-2.76 2.24,-5 5,-5 2.76,0 5,2.24 5,5 z"
+         id="path38617-8-9-5" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow2Mend-9-4-0"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Mend"
+       inkscape:isstock="true">
+      <path
+         transform="scale(-0.6)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:0.625;stroke-linejoin:round"
+         id="path38580-7-7-3" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="DotM-2-1-1"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="DotM"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(0.4,0,0,0.4,2.96,0.4)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="m -2.5,-1 c 0,2.76 -2.24,5 -5,5 -2.76,0 -5,-2.24 -5,-5 0,-2.76 2.24,-5 5,-5 2.76,0 5,2.24 5,5 z"
+         id="path38617-8-9-0" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow2Mend-9-4-6"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Mend"
+       inkscape:isstock="true">
+      <path
+         transform="scale(-0.6)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:0.625;stroke-linejoin:round"
+         id="path38580-7-7-32" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="DotM-2-1-6"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="DotM"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(0.4,0,0,0.4,2.96,0.4)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="m -2.5,-1 c 0,2.76 -2.24,5 -5,5 -2.76,0 -5,-2.24 -5,-5 0,-2.76 2.24,-5 5,-5 2.76,0 5,2.24 5,5 z"
+         id="path38617-8-9-1" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow2Mend-9-4-5"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Mend"
+       inkscape:isstock="true">
+      <path
+         transform="scale(-0.6)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:0.625;stroke-linejoin:round"
+         id="path38580-7-7-5" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="DotM-2-1-7"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="DotM"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(0.4,0,0,0.4,2.96,0.4)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="m -2.5,-1 c 0,2.76 -2.24,5 -5,5 -2.76,0 -5,-2.24 -5,-5 0,-2.76 2.24,-5 5,-5 2.76,0 5,2.24 5,5 z"
+         id="path38617-8-9-6" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow2Mend-9-4-56"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Mend"
+       inkscape:isstock="true">
+      <path
+         transform="scale(-0.6)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:0.625;stroke-linejoin:round"
+         id="path38580-7-7-9" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="DotM-2-1-74"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="DotM"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(0.4,0,0,0.4,2.96,0.4)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="m -2.5,-1 c 0,2.76 -2.24,5 -5,5 -2.76,0 -5,-2.24 -5,-5 0,-2.76 2.24,-5 5,-5 2.76,0 5,2.24 5,5 z"
+         id="path38617-8-9-52" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow2Mend-9-4-54"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Mend"
+       inkscape:isstock="true">
+      <path
+         transform="scale(-0.6)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:0.625;stroke-linejoin:round"
+         id="path38580-7-7-7" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="DotM-2-1-2"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="DotM"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(0.4,0,0,0.4,2.96,0.4)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="m -2.5,-1 c 0,2.76 -2.24,5 -5,5 -2.76,0 -5,-2.24 -5,-5 0,-2.76 2.24,-5 5,-5 2.76,0 5,2.24 5,5 z"
+         id="path38617-8-9-06" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow2Mend-9-4-8"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Mend"
+       inkscape:isstock="true">
+      <path
+         transform="scale(-0.6)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:0.625;stroke-linejoin:round"
+         id="path38580-7-7-92" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="DotM-2-1-2-4"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="DotM"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(0.4,0,0,0.4,2.96,0.4)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="m -2.5,-1 c 0,2.76 -2.24,5 -5,5 -2.76,0 -5,-2.24 -5,-5 0,-2.76 2.24,-5 5,-5 2.76,0 5,2.24 5,5 z"
+         id="path38617-8-9-06-9" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow2Mend-9-4-8-5"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Mend"
+       inkscape:isstock="true">
+      <path
+         transform="scale(-0.6)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:0.625;stroke-linejoin:round"
+         id="path38580-7-7-92-0" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="DotM-2-1-2-8"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="DotM"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(0.4,0,0,0.4,2.96,0.4)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="m -2.5,-1 c 0,2.76 -2.24,5 -5,5 -2.76,0 -5,-2.24 -5,-5 0,-2.76 2.24,-5 5,-5 2.76,0 5,2.24 5,5 z"
+         id="path38617-8-9-06-7" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow2Mend-9-4-8-1"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Mend"
+       inkscape:isstock="true">
+      <path
+         transform="scale(-0.6)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:0.625;stroke-linejoin:round"
+         id="path38580-7-7-92-7" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="DotM-2-1-7-3"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="DotM"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(0.4,0,0,0.4,2.96,0.4)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="m -2.5,-1 c 0,2.76 -2.24,5 -5,5 -2.76,0 -5,-2.24 -5,-5 0,-2.76 2.24,-5 5,-5 2.76,0 5,2.24 5,5 z"
+         id="path38617-8-9-6-6" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow2Mend-9-4-56-7"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Mend"
+       inkscape:isstock="true">
+      <path
+         transform="scale(-0.6)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:0.625;stroke-linejoin:round"
+         id="path38580-7-7-9-5" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="DotM-2-1-4-3"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="DotM"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(0.4,0,0,0.4,2.96,0.4)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="m -2.5,-1 c 0,2.76 -2.24,5 -5,5 -2.76,0 -5,-2.24 -5,-5 0,-2.76 2.24,-5 5,-5 2.76,0 5,2.24 5,5 z"
+         id="path38617-8-9-5-6" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow2Mend-9-4-0-7"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Mend"
+       inkscape:isstock="true">
+      <path
+         transform="scale(-0.6)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:0.625;stroke-linejoin:round"
+         id="path38580-7-7-3-5" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="DotM-2-1-4-5"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="DotM"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(0.4,0,0,0.4,2.96,0.4)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="m -2.5,-1 c 0,2.76 -2.24,5 -5,5 -2.76,0 -5,-2.24 -5,-5 0,-2.76 2.24,-5 5,-5 2.76,0 5,2.24 5,5 z"
+         id="path38617-8-9-5-62" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow2Mend-9-4-0-9"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Mend"
+       inkscape:isstock="true">
+      <path
+         transform="scale(-0.6)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:0.625;stroke-linejoin:round"
+         id="path38580-7-7-3-1" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="DotM-2-1-4-6"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="DotM"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(0.4,0,0,0.4,2.96,0.4)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="m -2.5,-1 c 0,2.76 -2.24,5 -5,5 -2.76,0 -5,-2.24 -5,-5 0,-2.76 2.24,-5 5,-5 2.76,0 5,2.24 5,5 z"
+         id="path38617-8-9-5-0" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow2Mend-9-4-0-6"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Mend"
+       inkscape:isstock="true">
+      <path
+         transform="scale(-0.6)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:0.625;stroke-linejoin:round"
+         id="path38580-7-7-3-2" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="DotM-2-1-4-2"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="DotM"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(0.4,0,0,0.4,2.96,0.4)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="m -2.5,-1 c 0,2.76 -2.24,5 -5,5 -2.76,0 -5,-2.24 -5,-5 0,-2.76 2.24,-5 5,-5 2.76,0 5,2.24 5,5 z"
+         id="path38617-8-9-5-02" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow2Mend-9-4-0-3"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Mend"
+       inkscape:isstock="true">
+      <path
+         transform="scale(-0.6)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:0.625;stroke-linejoin:round"
+         id="path38580-7-7-3-7" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="DotM-2-1-4-22"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="DotM"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(0.4,0,0,0.4,2.96,0.4)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="m -2.5,-1 c 0,2.76 -2.24,5 -5,5 -2.76,0 -5,-2.24 -5,-5 0,-2.76 2.24,-5 5,-5 2.76,0 5,2.24 5,5 z"
+         id="path38617-8-9-5-8" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow2Mend-9-4-0-97"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Mend"
+       inkscape:isstock="true">
+      <path
+         transform="scale(-0.6)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:0.625;stroke-linejoin:round"
+         id="path38580-7-7-3-3" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="DotM-2-1-4-5-3"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="DotM"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(0.4,0,0,0.4,2.96,0.4)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="m -2.5,-1 c 0,2.76 -2.24,5 -5,5 -2.76,0 -5,-2.24 -5,-5 0,-2.76 2.24,-5 5,-5 2.76,0 5,2.24 5,5 z"
+         id="path38617-8-9-5-62-6" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow2Mend-9-4-0-9-7"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Mend"
+       inkscape:isstock="true">
+      <path
+         transform="scale(-0.6)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:0.625;stroke-linejoin:round"
+         id="path38580-7-7-3-1-5" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="DotM-2-1-4-2-7"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="DotM"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(0.4,0,0,0.4,2.96,0.4)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="m -2.5,-1 c 0,2.76 -2.24,5 -5,5 -2.76,0 -5,-2.24 -5,-5 0,-2.76 2.24,-5 5,-5 2.76,0 5,2.24 5,5 z"
+         id="path38617-8-9-5-02-0" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow2Mend-9-4-0-3-9"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Mend"
+       inkscape:isstock="true">
+      <path
+         transform="scale(-0.6)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:0.625;stroke-linejoin:round"
+         id="path38580-7-7-3-7-3" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="DotM-2-1-4-36"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="DotM"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(0.4,0,0,0.4,2.96,0.4)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="m -2.5,-1 c 0,2.76 -2.24,5 -5,5 -2.76,0 -5,-2.24 -5,-5 0,-2.76 2.24,-5 5,-5 2.76,0 5,2.24 5,5 z"
+         id="path38617-8-9-5-7" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow2Mend-9-4-0-5"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Mend"
+       inkscape:isstock="true">
+      <path
+         transform="scale(-0.6)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:0.625;stroke-linejoin:round"
+         id="path38580-7-7-3-35" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow2Mstart-2"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Mstart"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.6)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:0.625;stroke-linejoin:round"
+         id="path2047-9" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="DotM-2-12"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="DotM"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(0.4,0,0,0.4,2.96,0.4)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="m -2.5,-1 c 0,2.76 -2.24,5 -5,5 -2.76,0 -5,-2.24 -5,-5 0,-2.76 2.24,-5 5,-5 2.76,0 5,2.24 5,5 z"
+         id="path38617-8-7" />
+    </marker>
+  </defs>
+  <g
+     inkscape:label="Calque 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       style="fill:#f9f9f9;fill-rule:evenodd;stroke:#000000;stroke-width:0.0168174;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect13285"
+       width="9.260417"
+       height="33.866669"
+       x="2.6458333"
+       y="2.6458333"
+       ry="1.8814815"
+       inkscape:export-filename="/home/oponcet/Projets/emaxilde/repos/talks/creer-sa-propre-vm-avec-compilation-jit-pour-les-nuls/assets/images/interpreting.png"
+       inkscape:export-xdpi="334.41745"
+       inkscape:export-ydpi="334.41745" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:1.41111px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="53.051029"
+       y="22.225"
+       id="text5515-3-3"
+       inkscape:export-filename="/home/oponcet/Projets/emaxilde/repos/talks/creer-sa-propre-vm-avec-compilation-jit-pour-les-nuls/assets/images/parsing.png"
+       inkscape:export-xdpi="334.41745"
+       inkscape:export-ydpi="334.41745"><tspan
+         sodipodi:role="line"
+         id="tspan5513-6-56"
+         style="font-size:1.41111px;stroke-width:0.264583"
+         x="53.051029"
+         y="22.225" /></text>
+    <rect
+       style="fill:#cccccc;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.01;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect33"
+       width="6.6145835"
+       height="2.1166668"
+       x="3.9687498"
+       y="27.78125"
+       ry="0.23518519"
+       inkscape:export-filename="/home/oponcet/Projets/emaxilde/repos/talks/creer-sa-propre-vm-avec-compilation-jit-pour-les-nuls/assets/inkscape/rect33.png"
+       inkscape:export-xdpi="599.08423"
+       inkscape:export-ydpi="599.08423" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:1.41111px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="4.4403858"
+       y="29.196838"
+       id="text5515-3-3-2"
+       inkscape:export-filename="/home/oponcet/Projets/emaxilde/repos/talks/creer-sa-propre-vm-avec-compilation-jit-pour-les-nuls/assets/images/parsing.png"
+       inkscape:export-xdpi="334.41745"
+       inkscape:export-ydpi="334.41745"><tspan
+         sodipodi:role="line"
+         id="tspan5513-6-56-9"
+         style="font-size:1.41111px;stroke-width:0.264583"
+         x="4.4403858"
+         y="29.196838">OP_NEG</tspan></text>
+    <rect
+       style="fill:#cccccc;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.01;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect33-2"
+       width="6.6145835"
+       height="2.1166668"
+       x="3.9687498"
+       y="33.072918"
+       ry="0.23518519"
+       inkscape:export-filename="/home/oponcet/Projets/emaxilde/repos/talks/creer-sa-propre-vm-avec-compilation-jit-pour-les-nuls/assets/inkscape/rect33.png"
+       inkscape:export-xdpi="599.08423"
+       inkscape:export-ydpi="599.08423" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:1.41111px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="4.5206561"
+       y="34.488506"
+       id="text5515-3-3-2-2"
+       inkscape:export-filename="/home/oponcet/Projets/emaxilde/repos/talks/creer-sa-propre-vm-avec-compilation-jit-pour-les-nuls/assets/images/parsing.png"
+       inkscape:export-xdpi="334.41745"
+       inkscape:export-ydpi="334.41745"><tspan
+         sodipodi:role="line"
+         id="tspan5513-6-56-9-8"
+         style="font-size:1.41111px;stroke-width:0.264583"
+         x="4.5206561"
+         y="34.488506">OP_POP</tspan></text>
+    <rect
+       style="fill:#cccccc;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.01;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect33-7"
+       width="6.6145835"
+       height="2.1166668"
+       x="3.9687498"
+       y="30.427084"
+       ry="0.23518519"
+       inkscape:export-filename="/home/oponcet/Projets/emaxilde/repos/talks/creer-sa-propre-vm-avec-compilation-jit-pour-les-nuls/assets/inkscape/rect33.png"
+       inkscape:export-xdpi="599.08423"
+       inkscape:export-ydpi="599.08423" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:1.41111px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="6.6039042"
+       y="31.842672"
+       id="text5515-3-3-2-5"
+       inkscape:export-filename="/home/oponcet/Projets/emaxilde/repos/talks/creer-sa-propre-vm-avec-compilation-jit-pour-les-nuls/assets/images/parsing.png"
+       inkscape:export-xdpi="334.41745"
+       inkscape:export-ydpi="334.41745"><tspan
+         sodipodi:role="line"
+         id="tspan5513-6-56-9-9"
+         style="font-size:1.41111px;stroke-width:0.264583"
+         x="6.6039042"
+         y="31.842672">...</tspan></text>
+    <rect
+       style="fill:#cccccc;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.01;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect33-3"
+       width="6.6145835"
+       height="2.1166668"
+       x="3.9687498"
+       y="3.96875"
+       ry="0.23518519"
+       inkscape:export-filename="/home/oponcet/Projets/emaxilde/repos/talks/creer-sa-propre-vm-avec-compilation-jit-pour-les-nuls/assets/inkscape/rect33.png"
+       inkscape:export-xdpi="599.08423"
+       inkscape:export-ydpi="599.08423" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:1.41111px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="4.8365712"
+       y="5.3843389"
+       id="text5515-3-3-2-6"
+       inkscape:export-filename="/home/oponcet/Projets/emaxilde/repos/talks/creer-sa-propre-vm-avec-compilation-jit-pour-les-nuls/assets/images/parsing.png"
+       inkscape:export-xdpi="334.41745"
+       inkscape:export-ydpi="334.41745"><tspan
+         sodipodi:role="line"
+         id="tspan5513-6-56-9-7"
+         style="font-size:1.41111px;stroke-width:0.264583"
+         x="4.8365712"
+         y="5.3843389">OP_I64</tspan></text>
+    <rect
+       style="fill:#cccccc;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.01;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect33-3-5"
+       width="6.6145835"
+       height="2.1166668"
+       x="3.9687498"
+       y="6.6145835"
+       ry="0.23518519"
+       inkscape:export-filename="/home/oponcet/Projets/emaxilde/repos/talks/creer-sa-propre-vm-avec-compilation-jit-pour-les-nuls/assets/inkscape/rect33.png"
+       inkscape:export-xdpi="599.08423"
+       inkscape:export-ydpi="599.08423" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:1.41111px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="5.0515451"
+       y="8.0301723"
+       id="text5515-3-3-2-6-3"
+       inkscape:export-filename="/home/oponcet/Projets/emaxilde/repos/talks/creer-sa-propre-vm-avec-compilation-jit-pour-les-nuls/assets/images/parsing.png"
+       inkscape:export-xdpi="334.41745"
+       inkscape:export-ydpi="334.41745"><tspan
+         sodipodi:role="line"
+         id="tspan5513-6-56-9-7-5"
+         style="font-size:1.41111px;stroke-width:0.264583"
+         x="5.0515451"
+         y="8.0301723">BYTE0</tspan></text>
+    <rect
+       style="fill:#cccccc;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.01;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect33-3-5-6"
+       width="6.6145835"
+       height="2.1166668"
+       x="3.9687498"
+       y="9.260416"
+       ry="0.23518519"
+       inkscape:export-filename="/home/oponcet/Projets/emaxilde/repos/talks/creer-sa-propre-vm-avec-compilation-jit-pour-les-nuls/assets/inkscape/rect33.png"
+       inkscape:export-xdpi="599.08423"
+       inkscape:export-ydpi="599.08423" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:1.41111px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="5.0698042"
+       y="10.676004"
+       id="text5515-3-3-2-6-3-2"
+       inkscape:export-filename="/home/oponcet/Projets/emaxilde/repos/talks/creer-sa-propre-vm-avec-compilation-jit-pour-les-nuls/assets/images/parsing.png"
+       inkscape:export-xdpi="334.41745"
+       inkscape:export-ydpi="334.41745"><tspan
+         sodipodi:role="line"
+         id="tspan5513-6-56-9-7-5-9"
+         style="font-size:1.41111px;stroke-width:0.264583"
+         x="5.0698042"
+         y="10.676004">BYTE1</tspan></text>
+    <rect
+       style="fill:#cccccc;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.01;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect33-3-5-6-1"
+       width="6.6145835"
+       height="2.1166668"
+       x="3.9687498"
+       y="11.90625"
+       ry="0.23518519"
+       inkscape:export-filename="/home/oponcet/Projets/emaxilde/repos/talks/creer-sa-propre-vm-avec-compilation-jit-pour-les-nuls/assets/inkscape/rect33.png"
+       inkscape:export-xdpi="599.08423"
+       inkscape:export-ydpi="599.08423" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:1.41111px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="5.0753164"
+       y="13.321838"
+       id="text5515-3-3-2-6-3-2-2"
+       inkscape:export-filename="/home/oponcet/Projets/emaxilde/repos/talks/creer-sa-propre-vm-avec-compilation-jit-pour-les-nuls/assets/images/parsing.png"
+       inkscape:export-xdpi="334.41745"
+       inkscape:export-ydpi="334.41745"><tspan
+         sodipodi:role="line"
+         id="tspan5513-6-56-9-7-5-9-7"
+         style="font-size:1.41111px;stroke-width:0.264583"
+         x="5.0753164"
+         y="13.321838">BYTE2</tspan></text>
+    <rect
+       style="fill:#cccccc;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.01;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect33-3-5-6-0"
+       width="6.6145835"
+       height="2.1166668"
+       x="3.9687498"
+       y="14.552082"
+       ry="0.23518519"
+       inkscape:export-filename="/home/oponcet/Projets/emaxilde/repos/talks/creer-sa-propre-vm-avec-compilation-jit-pour-les-nuls/assets/inkscape/rect33.png"
+       inkscape:export-xdpi="599.08423"
+       inkscape:export-ydpi="599.08423" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:1.41111px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="5.0611916"
+       y="15.96767"
+       id="text5515-3-3-2-6-3-2-9"
+       inkscape:export-filename="/home/oponcet/Projets/emaxilde/repos/talks/creer-sa-propre-vm-avec-compilation-jit-pour-les-nuls/assets/images/parsing.png"
+       inkscape:export-xdpi="334.41745"
+       inkscape:export-ydpi="334.41745"><tspan
+         sodipodi:role="line"
+         id="tspan5513-6-56-9-7-5-9-3"
+         style="font-size:1.41111px;stroke-width:0.264583"
+         x="5.0611916"
+         y="15.96767">BYTE3</tspan></text>
+    <rect
+       style="fill:#cccccc;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.01;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect33-3-5-60"
+       width="6.6145835"
+       height="2.1166668"
+       x="3.9687498"
+       y="17.197916"
+       ry="0.23518519"
+       inkscape:export-filename="/home/oponcet/Projets/emaxilde/repos/talks/creer-sa-propre-vm-avec-compilation-jit-pour-les-nuls/assets/inkscape/rect33.png"
+       inkscape:export-xdpi="599.08423"
+       inkscape:export-ydpi="599.08423" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:1.41111px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="5.0443106"
+       y="18.613504"
+       id="text5515-3-3-2-6-3-6"
+       inkscape:export-filename="/home/oponcet/Projets/emaxilde/repos/talks/creer-sa-propre-vm-avec-compilation-jit-pour-les-nuls/assets/images/parsing.png"
+       inkscape:export-xdpi="334.41745"
+       inkscape:export-ydpi="334.41745"><tspan
+         sodipodi:role="line"
+         id="tspan5513-6-56-9-7-5-2"
+         style="font-size:1.41111px;stroke-width:0.264583"
+         x="5.0443106"
+         y="18.613504">BYTE4</tspan></text>
+    <rect
+       style="fill:#cccccc;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.01;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect33-3-5-6-6"
+       width="6.6145835"
+       height="2.1166668"
+       x="3.9687498"
+       y="19.843748"
+       ry="0.23518519"
+       inkscape:export-filename="/home/oponcet/Projets/emaxilde/repos/talks/creer-sa-propre-vm-avec-compilation-jit-pour-les-nuls/assets/inkscape/rect33.png"
+       inkscape:export-xdpi="599.08423"
+       inkscape:export-ydpi="599.08423" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:1.41111px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="5.066359"
+       y="21.259336"
+       id="text5515-3-3-2-6-3-2-1"
+       inkscape:export-filename="/home/oponcet/Projets/emaxilde/repos/talks/creer-sa-propre-vm-avec-compilation-jit-pour-les-nuls/assets/images/parsing.png"
+       inkscape:export-xdpi="334.41745"
+       inkscape:export-ydpi="334.41745"><tspan
+         sodipodi:role="line"
+         id="tspan5513-6-56-9-7-5-9-8"
+         style="font-size:1.41111px;stroke-width:0.264583"
+         x="5.066359"
+         y="21.259336">BYTE5</tspan></text>
+    <rect
+       style="fill:#cccccc;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.01;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect33-3-5-6-1-7"
+       width="6.6145835"
+       height="2.1166668"
+       x="3.9687498"
+       y="22.48958"
+       ry="0.23518519"
+       inkscape:export-filename="/home/oponcet/Projets/emaxilde/repos/talks/creer-sa-propre-vm-avec-compilation-jit-pour-les-nuls/assets/inkscape/rect33.png"
+       inkscape:export-xdpi="599.08423"
+       inkscape:export-ydpi="599.08423" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:1.41111px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="5.0491338"
+       y="23.905169"
+       id="text5515-3-3-2-6-3-2-2-9"
+       inkscape:export-filename="/home/oponcet/Projets/emaxilde/repos/talks/creer-sa-propre-vm-avec-compilation-jit-pour-les-nuls/assets/images/parsing.png"
+       inkscape:export-xdpi="334.41745"
+       inkscape:export-ydpi="334.41745"><tspan
+         sodipodi:role="line"
+         id="tspan5513-6-56-9-7-5-9-7-2"
+         style="font-size:1.41111px;stroke-width:0.264583"
+         x="5.0491338"
+         y="23.905169">BYTE6</tspan></text>
+    <rect
+       style="fill:#cccccc;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.01;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect33-3-5-6-0-0"
+       width="6.6145835"
+       height="2.1166668"
+       x="3.9687498"
+       y="25.135414"
+       ry="0.23518519"
+       inkscape:export-filename="/home/oponcet/Projets/emaxilde/repos/talks/creer-sa-propre-vm-avec-compilation-jit-pour-les-nuls/assets/inkscape/rect33.png"
+       inkscape:export-xdpi="599.08423"
+       inkscape:export-ydpi="599.08423" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:1.41111px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="5.064981"
+       y="26.551003"
+       id="text5515-3-3-2-6-3-2-9-2"
+       inkscape:export-filename="/home/oponcet/Projets/emaxilde/repos/talks/creer-sa-propre-vm-avec-compilation-jit-pour-les-nuls/assets/images/parsing.png"
+       inkscape:export-xdpi="334.41745"
+       inkscape:export-ydpi="334.41745"><tspan
+         sodipodi:role="line"
+         id="tspan5513-6-56-9-7-5-9-3-3"
+         style="font-size:1.41111px;stroke-width:0.264583"
+         x="5.064981"
+         y="26.551003">BYTE7</tspan></text>
+  </g>
+</svg>

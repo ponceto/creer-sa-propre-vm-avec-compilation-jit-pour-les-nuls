@@ -1,0 +1,1664 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <title>Créer sa propre VM avec compilation JIT</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Créer sa propre VM avec compilation JIT">
+        <meta name="author" content="Olivier Poncet">
+        <link rel="stylesheet" href="vendor/reveal.js/dist/reset.css">
+        <link rel="stylesheet" href="vendor/reveal.js/dist/reveal.css">
+        <link rel="stylesheet" href="vendor/reveal.js/dist/theme/black.css">
+        <link rel="stylesheet" href="vendor/reveal.js/plugin/highlight/monokai.css">
+        <link rel="stylesheet" href="vendor/fontawesome/css/all.min.css">
+        <link rel="stylesheet" href="vendor/custom/css/custom.css">
+    </head>
+    <body>
+        <div class="reveal">
+            <div class="slides">
+<!-- TITRE {{{ -->
+                <section data-background="assets/images/background-0.jpg" data-transition="zoom">
+                    <p><img src="assets/images/book-cover.jpg" alt="book cover"></p>
+                </section>
+                <section data-background="assets/images/background-1.jpg" data-transition="zoom">
+                    <h1>CRÉER SA PROPRE VM<br>AVEC COMPILATION JIT</h1>
+                    <p><img src="assets/images/pour-les-nuls.png" alt="pour les nuls"></p>
+                </section>
+<!-- TITRE }}} -->
+<!-- CODE SOURCE, CODE MACHINE ET BYTECODE {{{ -->
+                <section data-background="assets/images/background-1.jpg" data-transition="slide" data-visibility="hidden">
+                    <section>
+                        <h2 class="color-dummies">CODE SOURCE, CODE MACHINE<br>ET BYTECODE</h2>
+                        <p><img class="h224" src="assets/images/for-dummies.svg" alt="for dummies"></p>
+                        <p>JUSTE UNE MISE AU POINT</p>
+                    </section>
+                    <section>
+                        <h3 class="color-dummies">LE CODE SOURCE</h3>
+                        <p class="fragment">LE HAUT NIVEAU</p>
+                        <ul style="list-style-type: square;">
+                            <li class="fragment blur highlight-current-yellow">C'est un langage de haut niveau conçu pour les humains</li>
+                            <li class="fragment blur highlight-current-yellow">Il permet d'écrire des programmes de façon expressive</li>
+                            <li class="fragment blur highlight-current-yellow">Il est incompréhensible par une architecture matérielle</li>
+                        </ul>
+                        <p class="fragment">▪ ▪ ▪</p>
+                    </section>
+                    <section>
+                        <h3 class="color-dummies">LE CODE MACHINE</h3>
+                        <p class="fragment">LE BAS NIVEAU</p>
+                        <ul style="list-style-type: square;">
+                            <li class="fragment blur highlight-current-yellow">C'est le langage natif de la machine</li>
+                            <li class="fragment blur highlight-current-yellow">Il est spécifique à une architecture matérielle</li>
+                            <li class="fragment blur highlight-current-yellow">C'est la seule chose qu'une machine peut comprendre</li>
+                        </ul>
+                        <p class="fragment">▪ ▪ ▪</p>
+                    </section>
+                    <section>
+                        <h3 class="color-dummies">LE BYTECODE</h3>
+                        <p class="fragment">LE NIVEAU INTERMÉDIAIRE</p>
+                        <ul style="list-style-type: square;">
+                            <li class="fragment blur highlight-current-yellow">C'est un « pseudo langage machine »</li>
+                            <li class="fragment blur highlight-current-yellow">Il est indépendant de toute architecture matérielle</li>
+                            <li class="fragment blur highlight-current-yellow">C'est un niveau entre le code source et le code machine</li>
+                        </ul>
+                        <p class="fragment">▪ ▪ ▪</p>
+                    </section>
+                </section>
+<!-- CODE SOURCE, CODE MACHINE ET BYTECODE }}} -->
+<!-- LANGAGES ET COMPILATION {{{ -->
+                <section data-background="assets/images/background-1.jpg" data-transition="slide">
+                    <section>
+                        <h2 class="color-dummies">LANGAGES ET COMPILATION</h2>
+                        <p><img class="h224" src="assets/images/for-dummies.svg" alt="for dummies"></p>
+                        <p>DIFFÉRENTES FAÇONS DE COMPRENDRE UN LANGAGE</p>
+                    </section>
+                    <section>
+                        <h3 class="color-dummies">COMPRENDRE UN LANGAGE</h3>
+                        <p class="fragment">QUATRE GRANDES TECHNIQUES</p>
+                        <ul style="list-style-type: square;">
+                            <li class="fragment blur highlight-current-yellow">L'interpréteur</li>
+                            <li class="fragment blur highlight-current-yellow">Le compilateur Ahead Of Time (AOT)</li>
+                            <li class="fragment blur highlight-current-yellow">Le compilateur Just In Time (JIT)</li>
+                            <li class="fragment blur highlight-current-yellow">Le compilateur AOT+JIT</li>
+                        </ul>
+                        <p class="fragment">▪ ▪ ▪</p>
+                    </section>
+                    <section>
+                        <h3 class="color-dummies">L'INTERPRÉTEUR</h3>
+                        <ul style="list-style-type: square;">
+                            <li class="fragment blur highlight-current-yellow">Le code source n'est absolument pas compilé</li>
+                            <li class="fragment blur highlight-current-yellow">Le code source est analysé et exécuté au fil de l'eau</li>
+                        </ul>
+                        <p class="fragment"><img class="h224" src="assets/images/interpreter.png" alt="interpreter"></p>
+                    </section>
+                    <section data-visibility="hidden">
+                        <h3 class="color-dummies">AVANTAGES DE L'INTERPRÉTEUR</h3>
+                        <ul style="list-style-type: square;">
+                            <li class="fragment blur highlight-current-green">Pas de phase préliminaire de compilation des programmes</li>
+                            <li class="fragment blur highlight-current-green">Relative facilité de développement de l'interpréteur</li>
+                            <li class="fragment blur highlight-current-green">Portabilité assez élevée et plutôt aisée</li>
+                        </ul>
+                        <p class="fragment huge-font">👍</p>
+                    </section>
+                    <section data-visibility="hidden">
+                        <h3 class="color-dummies">INCONVENIENTS DE L'INTERPRÉTEUR</h3>
+                        <ul style="list-style-type: square;">
+                            <li class="fragment blur highlight-current-red">L'exécution du programme peut être relativement lente</li>
+                            <li class="fragment blur highlight-current-red">Difficulté plus élevée de maintenance et de déboggage</li>
+                            <li class="fragment blur highlight-current-red">Des erreurs de syntaxe peuvent interrompre le programme</li>
+                        </ul>
+                        <p class="fragment huge-font">👎</p>
+                    </section>
+                    <section>
+                        <h3 class="color-dummies">LA COMPILATION AHEAD OF TIME</h3>
+                        <ul style="list-style-type: square;">
+                            <li class="fragment blur highlight-current-yellow">Le code source est compilé vers du code binaire avant l'exécution</li>
+                            <li class="fragment blur highlight-current-yellow">Le code binaire produit est exécuté directement par le processeur</li>
+                        </ul>
+                        <p class="fragment"><img class="h224" src="assets/images/compiler-aot.png" alt="compiler-aot"></p>
+                    </section>
+                    <section data-visibility="hidden">
+                        <h3 class="color-dummies">AVANTAGES DE LA COMPILATION AHEAD OF TIME</h3>
+                        <ul style="list-style-type: square;">
+                            <li class="fragment blur highlight-current-green">Code analysé et optimisé avant l'exécution</li>
+                            <li class="fragment blur highlight-current-green">Performance lors de l'exécution</li>
+                            <li class="fragment blur highlight-current-green">Facilité de déboggage</li>
+                        </ul>
+                        <p class="fragment huge-font">👍</p>
+                    </section>
+                    <section data-visibility="hidden">
+                        <h3 class="color-dummies">INCONVENIENTS DE LA COMPILATION AHEAD OF TIME</h3>
+                        <ul style="list-style-type: square;">
+                            <li class="fragment blur highlight-current-red">Nécessite une phase préliminaire de compilation</li>
+                            <li class="fragment blur highlight-current-red">Perte de fléxibilité dans les phases de développement et de déboggage</li>
+                            <li class="fragment blur highlight-current-red">Le code binaire produit est figé une fois pour toute</li>
+                        </ul>
+                        <p class="fragment huge-font">👎</p>
+                    </section>
+                    <section>
+                        <h3 class="color-dummies">LA COMPILATION JUST IN TIME</h3>
+                        <ul style="list-style-type: square;">
+                            <li class="fragment blur highlight-current-yellow">Le code source est compilé vers du bytecode lors de l'exécution</li>
+                            <li class="fragment blur highlight-current-yellow">Le bytecode est compilé vers du code binaire lors de l'exécution</li>
+                        </ul>
+                        <p class="fragment"><img class="h224" src="assets/images/compiler-jit.png" alt="compiler-jit"></p>
+                    </section>
+                    <section data-visibility="hidden">
+                        <h3 class="color-dummies">AVANTAGES DE LA COMPILATION JUST IN TIME</h3>
+                        <ul style="list-style-type: square;">
+                            <li class="fragment blur highlight-current-green">L'exécution du code est de moyennement à assez performante</li>
+                            <li class="fragment blur highlight-current-green">L'optimisation du code ne repose pas sur une compilation amont</li>
+                            <li class="fragment blur highlight-current-green">Le code binaire produit peut être optimisé de façon adaptative</li>
+                        </ul>
+                        <p class="fragment huge-font">👍</p>
+                    </section>
+                    <section data-visibility="hidden">
+                        <h3 class="color-dummies">INCONVENIENTS DE LA COMPILATION JUST IN TIME</h3>
+                        <ul style="list-style-type: square;">
+                            <li class="fragment blur highlight-current-red">Légère perte de performances due à la compilation en temps réel</li>
+                            <li class="fragment blur highlight-current-red">Nécessite un runtime embarquant un exécuteur et un compilateur</li>
+                            <li class="fragment blur highlight-current-red">La chaîne d'outils peut être plus complexe à développer</li>
+                        </ul>
+                        <p class="fragment huge-font">👎</p>
+                    </section>
+                    <section>
+                        <h3 class="color-dummies">LA COMPILATION AOT + JIT</h3>
+                        <ul style="list-style-type: square;">
+                            <li class="fragment blur highlight-current-yellow">Le code source est compilé vers du bytecode avant l'exécution</li>
+                            <li class="fragment blur highlight-current-yellow">Le bytecode est compilé vers du code binaire lors de l'exécution</li>
+                        </ul>
+                        <p class="fragment"><img class="h224" src="assets/images/compiler-aot-jit.png" alt="compiler-aot-jit"></p>
+                    </section>
+                    <section data-visibility="hidden">
+                        <h3 class="color-dummies">AVANTAGES DE LA COMPILATION AOT + JIT</h3>
+                        <ul style="list-style-type: square;">
+                            <li class="fragment blur highlight-current-green">Le meilleur de la compilation AOT et JIT</li>
+                            <li class="fragment blur highlight-current-green">La phase de compilation en bytecode est faite en amont</li>
+                            <li class="fragment blur highlight-current-green">Limite les erreurs et permet l'analyse du code en amont</li>
+                        </ul>
+                        <p class="fragment huge-font">👍</p>
+                    </section>
+                    <section data-visibility="hidden">
+                        <h3 class="color-dummies">INCONVENIENTS DE LA COMPILATION AOT + JIT</h3>
+                        <ul style="list-style-type: square;">
+                            <li class="fragment blur highlight-current-red">Combinaison des inconvénients AOT et JIT</li>
+                            <li class="fragment blur highlight-current-red">Nécessite une phase préliminaire de compilation intermédiaire</li>
+                            <li class="fragment blur highlight-current-red">Nécessite une certaine standardisation du code intermédiaire</li>
+                        </ul>
+                        <p class="fragment huge-font">👎</p>
+                    </section>
+                </section>
+<!-- LANGAGES ET COMPILATION }}} -->
+<!-- CRÉONS UNE MACHINE VIRTUELLE {{{ -->
+                <section data-background="assets/images/background-1.jpg" data-transition="slide">
+                    <section>
+                        <h2 class="color-dummies">CRÉONS UNE MACHINE VIRTUELLE</h2>
+                        <p><img class="h224" src="assets/images/for-dummies.svg" alt="for dummies"></p>
+                        <p>AVEC SON BYTECODE ET SA JIT INTÉGRÉE</p>
+                    </section>
+                    <section>
+                        <h3 class="color-dummies">LE PRINCIPE</h3>
+                        <p class="fragment">LA RECETTE DE TONTON Z'OLIV'</p>
+                        <ul style="list-style-type: square;">
+                            <li class="fragment blur highlight-current-yellow">Concevoir un langage source</li>
+                            <li class="fragment blur highlight-current-yellow">Concevoir un bytecode simple et complet</li>
+                            <li class="fragment blur highlight-current-yellow">Compiler le langage vers le bytecode</li>
+                            <li class="fragment blur highlight-current-yellow">Interpréter le bytecode lors de la première exécution</li>
+                            <li class="fragment blur highlight-current-yellow" style="list-style: none; margin-left: 1em; font-size: smaller;">↪ Exécuter chaque instruction du bytecode généré</li>
+                            <li class="fragment blur highlight-current-yellow" style="list-style: none; margin-left: 1em; font-size: smaller;">↪ Générer le code machine binaire correspondant</li>
+                            <li class="fragment blur highlight-current-yellow">Exécuter le code binaire les fois suivantes</li>
+                        </ul>
+                        <p class="fragment">▪ ▪ ▪</p>
+                    </section>
+                    <section>
+                        <h3 class="color-dummies">UNE CALCULATRICE RPN</h3>
+                        <p class="fragment">REVERSE POLISH NOTATION</p>
+                        <div class="r-stack">
+                            <p class="fragment fade-in-then-semi-out"><img class="h512" src="assets/images/hp48gx.png" alt="hp48gx"></p>
+                            <p class="fragment">La notation polonaise inverse (ou notation post-fixée) permet d'écrire des formules arithmétiques de façon simple et non ambiguë</p>
+                        </div>
+                    </section>
+                    <section>
+                        <h3 class="color-dummies">EXEMPLES D'EXPRESSIONS RPN</h3>
+                        <p class="fragment">POUR ILLUSTRER LE PRINCIPE</p>
+                        <pre class="fragment"><code class="language-cc" data-trim>
+1 + 2             →   1 2 +
+                        </code></pre>
+                        <pre class="fragment"><code class="language-cc" data-trim>
+3 * 4             →   3 4 *
+                        </code></pre>
+                        <pre class="fragment"><code class="language-cc" data-trim>
+1 + 2 * 3         →   1 2 3 * +
+                        </code></pre>
+                        <pre class="fragment"><code class="language-cc" data-trim>
+(3 + 4) * 2 + 1   →   3 4 + 2 * 1 +
+                        </code></pre>
+                        <pre class="fragment"><code class="language-cc" data-trim>
+3 - (4 * 5)       →   3 4 5 * −
+                        </code></pre>
+                        <p class="fragment">▪ ▪ ▪</p>
+                    </section>
+                    <section>
+                        <h3 class="color-dummies">MOTS CLÉS DE LA CALCULATRICE</h3>
+                        <table class="r-frame about" style="font-size: 15px;">
+                            <tbody>
+                                <tr>
+                                    <td style="text-align:center"></td>
+                                    <td style="text-align:center"></td>
+                                    <td style="text-align:center"><code>nop</code></td>
+                                    <td style="text-align:left">no operation; do absolutely nothing</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center"></td>
+                                    <td style="text-align:center"></td>
+                                    <td style="text-align:center"><code>nnn</code></td>
+                                    <td style="text-align:left">push the <code>nnn</code> value onto the stack</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center"></td>
+                                    <td style="text-align:center"><code>i1</code></td>
+                                    <td style="text-align:center"><code>top</code></td>
+                                    <td style="text-align:left">get the topmost value from the stack</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center"></td>
+                                    <td style="text-align:center"><code>i1</code></td>
+                                    <td style="text-align:center"><code>pop</code></td>
+                                    <td style="text-align:left">pop the topmost value from the stack</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center"></td>
+                                    <td style="text-align:center"></td>
+                                    <td style="text-align:center"><code>clr</code></td>
+                                    <td style="text-align:left">clear the stack</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center"></td>
+                                    <td style="text-align:center"><code>i1</code></td>
+                                    <td style="text-align:center"><code>dup</code></td>
+                                    <td style="text-align:left">duplicate <code>i1</code></td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center"><code>i1</code></td>
+                                    <td style="text-align:center"><code>i2</code></td>
+                                    <td style="text-align:center"><code>xch</code></td>
+                                    <td style="text-align:left">exchange <code>i1</code> and <code>i2</code></td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center"><code>i1</code></td>
+                                    <td style="text-align:center"><code>i2</code></td>
+                                    <td style="text-align:center"><code>sto</code></td>
+                                    <td style="text-align:left">store <code>i1</code> into <code>i2</code> register</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center"></td>
+                                    <td style="text-align:center"><code>i1</code></td>
+                                    <td style="text-align:center"><code>rcl</code></td>
+                                    <td style="text-align:left">fetch <code>i2</code> from <code>i1</code> register</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center"></td>
+                                    <td style="text-align:center"><code>i1</code></td>
+                                    <td style="text-align:center"><code>abs</code></td>
+                                    <td style="text-align:left">compute the absolute value of <code>i1</code></td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center"></td>
+                                    <td style="text-align:center"><code>i1</code></td>
+                                    <td style="text-align:center"><code>neg</code></td>
+                                    <td style="text-align:left">compute the negation of <code>i1</code></td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center"><code>i1</code></td>
+                                    <td style="text-align:center"><code>i2</code></td>
+                                    <td style="text-align:center"><code>add</code></td>
+                                    <td style="text-align:left">compute the sum of <code>i1</code> and <code>i2</code></td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center"><code>i1</code></td>
+                                    <td style="text-align:center"><code>i2</code></td>
+                                    <td style="text-align:center"><code>sub</code></td>
+                                    <td style="text-align:left">compute the difference of <code>i1</code> and <code>i2</code></td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center"><code>i1</code></td>
+                                    <td style="text-align:center"><code>i2</code></td>
+                                    <td style="text-align:center"><code>mul</code></td>
+                                    <td style="text-align:left">compute the product of <code>i1</code> and <code>i2</code></td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center"><code>i1</code></td>
+                                    <td style="text-align:center"><code>i2</code></td>
+                                    <td style="text-align:center"><code>div</code></td>
+                                    <td style="text-align:left">compute the division of <code>i1</code> and <code>i2</code></td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center"><code>i1</code></td>
+                                    <td style="text-align:center"><code>i2</code></td>
+                                    <td style="text-align:center"><code>mod</code></td>
+                                    <td style="text-align:left">compute the remainder of <code>i1</code> and <code>i2</code></td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center"></td>
+                                    <td style="text-align:center"><code>i1</code></td>
+                                    <td style="text-align:center"><code>cpl</code></td>
+                                    <td style="text-align:left">compute the one’s complement of <code>i1</code></td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center"><code>i1</code></td>
+                                    <td style="text-align:center"><code>i2</code></td>
+                                    <td style="text-align:center"><code>and</code></td>
+                                    <td style="text-align:left">compute the logical and between <code>i1</code> and <code>i2</code></td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center"><code>i1</code></td>
+                                    <td style="text-align:center"><code>i2</code></td>
+                                    <td style="text-align:center"><code>ior</code></td>
+                                    <td style="text-align:left">compute the logical inclusive or between <code>i1</code> and <code>i2</code></td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center"><code>i1</code></td>
+                                    <td style="text-align:center"><code>i2</code></td>
+                                    <td style="text-align:center"><code>xor</code></td>
+                                    <td style="text-align:left">compute the logical exclusive or between <code>i1</code> and <code>i2</code></td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center"><code>i1</code></td>
+                                    <td style="text-align:center"><code>i2</code></td>
+                                    <td style="text-align:center"><code>shl</code></td>
+                                    <td style="text-align:left">shift <code>i1</code> <code>i2</code> bits to the left</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center"><code>i1</code></td>
+                                    <td style="text-align:center"><code>i2</code></td>
+                                    <td style="text-align:center"><code>shr</code></td>
+                                    <td style="text-align:left">shift <code>i1</code> <code>i2</code> bits to the right</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center"></td>
+                                    <td style="text-align:center"><code>i1</code></td>
+                                    <td style="text-align:center"><code>inc</code></td>
+                                    <td style="text-align:left">increment <code>i1</code></td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center"></td>
+                                    <td style="text-align:center"><code>i1</code></td>
+                                    <td style="text-align:center"><code>dec</code></td>
+                                    <td style="text-align:left">decrement <code>i1</code></td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center"></td>
+                                    <td style="text-align:center"><code>i1</code></td>
+                                    <td style="text-align:center"><code>hlt</code></td>
+                                    <td style="text-align:left">blocks the execution for at least <code>i1</code> milliseconds</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </section>
+                    <section>
+                        <h3 class="color-dummies">OPÉRATEURS DE LA CALCULATRICE</h3>
+                        <table class="r-frame about" style="font-size: 15px;">
+                            <tbody>
+                                <tr>
+                                    <td style="text-align:center"><code>i1</code></td>
+                                    <td style="text-align:center"><code>i2</code></td>
+                                    <td style="text-align:center"><code>+</code></td>
+                                    <td style="text-align:left">same as <code>&lt;i1&gt; &lt;i2&gt; add</code></td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center"><code>i1</code></td>
+                                    <td style="text-align:center"><code>i2</code></td>
+                                    <td style="text-align:center"><code>-</code></td>
+                                    <td style="text-align:left">same as <code>&lt;i1&gt; &lt;i2&gt; sub</code></td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center"><code>i1</code></td>
+                                    <td style="text-align:center"><code>i2</code></td>
+                                    <td style="text-align:center"><code>*</code></td>
+                                    <td style="text-align:left">same as <code>&lt;i1&gt; &lt;i2&gt; mul</code></td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center"><code>i1</code></td>
+                                    <td style="text-align:center"><code>i2</code></td>
+                                    <td style="text-align:center"><code>/</code></td>
+                                    <td style="text-align:left">same as <code>&lt;i1&gt; &lt;i2&gt; div</code></td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center"><code>i1</code></td>
+                                    <td style="text-align:center"><code>i2</code></td>
+                                    <td style="text-align:center"><code>%</code></td>
+                                    <td style="text-align:left">same as <code>&lt;i1&gt; &lt;i2&gt; mod</code></td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center"><code>i1</code></td>
+                                    <td style="text-align:center"><code>i2</code></td>
+                                    <td style="text-align:center"><code>~</code></td>
+                                    <td style="text-align:left">same as <code>&lt;i1&gt; &lt;i2&gt; cpl</code></td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center"><code>i1</code></td>
+                                    <td style="text-align:center"><code>i2</code></td>
+                                    <td style="text-align:center"><code>&amp;</code></td>
+                                    <td style="text-align:left">same as <code>&lt;i1&gt; &lt;i2&gt; and</code></td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center"><code>i1</code></td>
+                                    <td style="text-align:center"><code>i2</code></td>
+                                    <td style="text-align:center"><code>|</code></td>
+                                    <td style="text-align:left">same as <code>&lt;i1&gt; &lt;i2&gt; ior</code></td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center"><code>i1</code></td>
+                                    <td style="text-align:center"><code>i2</code></td>
+                                    <td style="text-align:center"><code>^</code></td>
+                                    <td style="text-align:left">same as <code>&lt;i1&gt; &lt;i2&gt; xor</code></td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center"><code>i1</code></td>
+                                    <td style="text-align:center"><code>i2</code></td>
+                                    <td style="text-align:center"><code>&lt;&lt;</code></td>
+                                    <td style="text-align:left">same as <code>&lt;i1&gt; &lt;i2&gt; shl</code></td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center"><code>i1</code></td>
+                                    <td style="text-align:center"><code>i2</code></td>
+                                    <td style="text-align:center"><code>&gt;&gt;</code></td>
+                                    <td style="text-align:left">same as <code>&lt;i1&gt; &lt;i2&gt; shr</code></td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center"></td>
+                                    <td style="text-align:center"><code>i1</code></td>
+                                    <td style="text-align:center"><code>++</code></td>
+                                    <td style="text-align:left">same as <code>&lt;i1&gt; inc</code></td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center"></td>
+                                    <td style="text-align:center"><code>i1</code></td>
+                                    <td style="text-align:center"><code>--</code></td>
+                                    <td style="text-align:left">same as <code>&lt;i1&gt; dec</code></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </section>
+                    <section>
+                        <h3 class="color-dummies">INSTRUCTIONS ÉTENDUES</h3>
+                        <table class="r-frame about" style="font-size: 15px;">
+                            <tbody>
+                                <tr>
+                                    <td style="text-align:center"></td>
+                                    <td style="text-align:center"><code>i1</code></td>
+                                    <td style="text-align:center"><code>st0</code></td>
+                                    <td style="text-align:left">same as <code>&lt;i1&gt; 0 sto</code></td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center"></td>
+                                    <td style="text-align:center"><code>i1</code></td>
+                                    <td style="text-align:center"><code>st1</code></td>
+                                    <td style="text-align:left">same as <code>&lt;i1&gt; 1 sto</code></td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center"></td>
+                                    <td style="text-align:center"><code>i1</code></td>
+                                    <td style="text-align:center"><code>st2</code></td>
+                                    <td style="text-align:left">same as <code>&lt;i1&gt; 2 sto</code></td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center"></td>
+                                    <td style="text-align:center"><code>i1</code></td>
+                                    <td style="text-align:center"><code>st3</code></td>
+                                    <td style="text-align:left">same as <code>&lt;i1&gt; 3 sto</code></td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center"></td>
+                                    <td style="text-align:center"><code>i1</code></td>
+                                    <td style="text-align:center"><code>st4</code></td>
+                                    <td style="text-align:left">same as <code>&lt;i1&gt; 4 sto</code></td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center"></td>
+                                    <td style="text-align:center"><code>i1</code></td>
+                                    <td style="text-align:center"><code>st5</code></td>
+                                    <td style="text-align:left">same as <code>&lt;i1&gt; 5 sto</code></td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center"></td>
+                                    <td style="text-align:center"><code>i1</code></td>
+                                    <td style="text-align:center"><code>st6</code></td>
+                                    <td style="text-align:left">same as <code>&lt;i1&gt; 6 sto</code></td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center"></td>
+                                    <td style="text-align:center"><code>i1</code></td>
+                                    <td style="text-align:center"><code>st7</code></td>
+                                    <td style="text-align:left">same as <code>&lt;i1&gt; 7 sto</code></td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center"></td>
+                                    <td style="text-align:center"><code>i1</code></td>
+                                    <td style="text-align:center"><code>st8</code></td>
+                                    <td style="text-align:left">same as <code>&lt;i1&gt; 8 sto</code></td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center"></td>
+                                    <td style="text-align:center"><code>i1</code></td>
+                                    <td style="text-align:center"><code>st9</code></td>
+                                    <td style="text-align:left">same as <code>&lt;i1&gt; 9 sto</code></td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center"></td>
+                                    <td style="text-align:center"></td>
+                                    <td style="text-align:center"><code>rc0</code></td>
+                                    <td style="text-align:left">same as <code>0 rcl</code></td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center"></td>
+                                    <td style="text-align:center"></td>
+                                    <td style="text-align:center"><code>rc1</code></td>
+                                    <td style="text-align:left">same as <code>1 rcl</code></td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center"></td>
+                                    <td style="text-align:center"></td>
+                                    <td style="text-align:center"><code>rc2</code></td>
+                                    <td style="text-align:left">same as <code>2 rcl</code></td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center"></td>
+                                    <td style="text-align:center"></td>
+                                    <td style="text-align:center"><code>rc3</code></td>
+                                    <td style="text-align:left">same as <code>3 rcl</code></td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center"></td>
+                                    <td style="text-align:center"></td>
+                                    <td style="text-align:center"><code>rc4</code></td>
+                                    <td style="text-align:left">same as <code>4 rcl</code></td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center"></td>
+                                    <td style="text-align:center"></td>
+                                    <td style="text-align:center"><code>rc5</code></td>
+                                    <td style="text-align:left">same as <code>5 rcl</code></td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center"></td>
+                                    <td style="text-align:center"></td>
+                                    <td style="text-align:center"><code>rc6</code></td>
+                                    <td style="text-align:left">same as <code>6 rcl</code></td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center"></td>
+                                    <td style="text-align:center"></td>
+                                    <td style="text-align:center"><code>rc7</code></td>
+                                    <td style="text-align:left">same as <code>7 rcl</code></td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center"></td>
+                                    <td style="text-align:center"></td>
+                                    <td style="text-align:center"><code>rc8</code></td>
+                                    <td style="text-align:left">same as <code>8 rcl</code></td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center"></td>
+                                    <td style="text-align:center"></td>
+                                    <td style="text-align:center"><code>rc9</code></td>
+                                    <td style="text-align:left">same as <code>9 rcl</code></td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center"></td>
+                                    <td style="text-align:center"></td>
+                                    <td style="text-align:center"><code>rnd</code></td>
+                                    <td style="text-align:left">same as <code>29 rcl</code>; get a pseudo-random number</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center"></td>
+                                    <td style="text-align:center"></td>
+                                    <td style="text-align:center"><code>now</code></td>
+                                    <td style="text-align:left">same as <code>30 rcl</code>; get the number of milliseconds since epoch</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center"><code>i1</code></td>
+                                    <td style="text-align:center"><code>i2</code></td>
+                                    <td style="text-align:center"><code>fib</code></td>
+                                    <td style="text-align:left">same as <code>dup 20 sto add 20 rcl xch</code>; compute an iteration of the fibonacci suite</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center"></td>
+                                    <td style="text-align:center"></td>
+                                    <td style="text-align:center"><code>run</code></td>
+                                    <td style="text-align:left">run the compiled expression</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </section>
+                    <section>
+                        <h3 class="color-dummies">ARCHITECTURE</h3>
+                        <p class="fragment">VUE SIMPLIFIÉE</p>
+                        <p class="fragment"><img class="h512" src="assets/images/rpn-calculator-with-jit.png" alt="rpn calculator with jit"></p>
+                    </section>
+                    <section>
+                        <h3 class="color-dummies">LA CALCULATRICE</h3>
+                        <p class="fragment">C'EST LA MACHINE VIRTUELLE</p>
+                        <pre class="fragment"><code class="custom-code language-cc" data-line-numbers="|3,4-5|17,18-21|3,7|3,9|3,11|3,13|3,15|" data-trim>
+class Calculator
+{
+public: // public interface
+    Calculator(Console&amp;);
+    virtual ~Calculator() = default;
+
+    void execute(const std::string&amp; expression);
+
+    void compile(const std::string&amp; expression);
+
+    void run();
+
+    void clear();
+
+    int64_t result();
+
+private: // private data
+    Console&amp; _console;
+    Operands _operands;
+    ByteCode _bytecode;
+    HostCode _hostcode;
+};
+                        </code></pre>
+                    </section>
+                    <section>
+                        <h3 class="color-dummies">L'ÉTAT DE LA CALCULATRICE RPN</h3>
+                        <p class="fragment">CONTIENT LA STACK, LES REGISTRES ET LES OPÉRATEURS</p>
+                        <pre class="fragment"><code class="custom-code language-cc" data-line-numbers="" data-trim>
+struct Operands
+{
+    std::stack&lt;int64_t&gt;     stack;
+    std::array&lt;int64_t, 32&gt; array;
+};
+
+struct Operators
+{
+    static int64_t op_nop(Operands&amp; operands);
+    static int64_t op_i64(Operands&amp; operands, const int64_t operand);
+    static int64_t op_top(Operands&amp; operands);
+    static int64_t op_pop(Operands&amp; operands);
+    static int64_t op_clr(Operands&amp; operands);
+    static int64_t op_dup(Operands&amp; operands);
+    static int64_t op_xch(Operands&amp; operands);
+    static int64_t op_sto(Operands&amp; operands);
+    static int64_t op_rcl(Operands&amp; operands);
+    static int64_t op_abs(Operands&amp; operands);
+    static int64_t op_neg(Operands&amp; operands);
+    static int64_t op_add(Operands&amp; operands);
+    static int64_t op_sub(Operands&amp; operands);
+    static int64_t op_mul(Operands&amp; operands);
+    static int64_t op_div(Operands&amp; operands);
+    static int64_t op_mod(Operands&amp; operands);
+    static int64_t op_cpl(Operands&amp; operands);
+    static int64_t op_and(Operands&amp; operands);
+    static int64_t op_ior(Operands&amp; operands);
+    static int64_t op_xor(Operands&amp; operands);
+    static int64_t op_shl(Operands&amp; operands);
+    static int64_t op_shr(Operands&amp; operands);
+    static int64_t op_inc(Operands&amp; operands);
+    static int64_t op_dec(Operands&amp; operands);
+    static int64_t op_hlt(Operands&amp; operands);
+};
+                        </code></pre>
+                    </section>
+                    <section>
+                        <h3 class="color-dummies">LE BYTECODE</h3>
+                        <p class="fragment">LE PSEUDO CODE MACHINE</p>
+                        <p class="fragment"><img class="h512" src="assets/images/bytecode.png" alt="bytecode"></p>
+                    </section>
+                    <section>
+                        <h3 class="color-dummies">LE BYTECODE</h3>
+                        <p class="fragment">LE PSEUDO CODE MACHINE</p>
+                        <div class="r-stack">
+                            <pre class="fragment"><code class="custom-code language-cc" data-line-numbers="|3,4-5|26,27-29|3,7|3,9-12|3,14-23|" data-trim>
+class ByteCode
+{
+public: // public interface
+    ByteCode();
+    virtual ~ByteCode();
+
+    void reset();
+
+    void emit_byte(const uint8_t value);
+    void emit_word(const uint16_t value);
+    void emit_long(const uint32_t value);
+    void emit_quad(const uint64_t value);
+
+    void emit_nop();
+    void emit_i64(const int64_t operand);
+    void emit_top();
+    void emit_pop();
+    void emit_clr();
+    ...
+    void emit_add();
+    void emit_sub();
+    void emit_mul();
+    void emit_div();
+    ...
+
+private: // private data
+    uint8_t* _buffer;
+    uint8_t* _bufptr;
+    size_t   _length;
+};
+                            </code></pre>
+                            <pre class="fragment"><code class="custom-code language-cc" data-line-numbers="|5,6-29|" data-trim>
+class ByteCode
+{
+public: // public interface
+    ...
+public: // opcodes
+    static constexpr uint8_t OP_NOP = 0x00;
+    static constexpr uint8_t OP_I64 = 0x01;
+    static constexpr uint8_t OP_TOP = 0x02;
+    static constexpr uint8_t OP_POP = 0x03;
+    static constexpr uint8_t OP_CLR = 0x04;
+    static constexpr uint8_t OP_DUP = 0x05;
+    static constexpr uint8_t OP_XCH = 0x06;
+    static constexpr uint8_t OP_STO = 0x07;
+    static constexpr uint8_t OP_RCL = 0x08;
+    static constexpr uint8_t OP_ABS = 0x09;
+    static constexpr uint8_t OP_NEG = 0x0a;
+    static constexpr uint8_t OP_ADD = 0x0b;
+    static constexpr uint8_t OP_SUB = 0x0c;
+    static constexpr uint8_t OP_MUL = 0x0d;
+    static constexpr uint8_t OP_DIV = 0x0e;
+    static constexpr uint8_t OP_MOD = 0x0f;
+    static constexpr uint8_t OP_CPL = 0x10;
+    static constexpr uint8_t OP_AND = 0x11;
+    static constexpr uint8_t OP_IOR = 0x12;
+    static constexpr uint8_t OP_XOR = 0x13;
+    static constexpr uint8_t OP_SHL = 0x14;
+    static constexpr uint8_t OP_SHR = 0x15;
+    static constexpr uint8_t OP_INC = 0x16;
+    static constexpr uint8_t OP_DEC = 0x17;
+    static constexpr uint8_t OP_HLT = 0x18;
+    ...
+};
+                            </code></pre>
+                        </div>
+                    </section>
+                    <section>
+                        <h3 class="color-dummies">COMPILER UNE EXPRESSION</h3>
+                        <p class="fragment">TRANSFORMER UNE EXPRESSION EN BYTECODE</p>
+                        <p class="fragment"><img class="h288" src="assets/images/parsing.png" alt="parsing"></p>
+                    </section>
+                    <section>
+                        <h3 class="color-dummies">INTERPRÉTER LE BYTECODE</h3>
+                        <p class="fragment">FETCH · DECODE · EXECUTE</p>
+                        <p class="fragment"><img class="h288" src="assets/images/interpreting.png" alt="interpreting"></p>
+                    </section>
+                    <section>
+                        <h3 class="color-dummies">FETCH &amp; DECODE</h3>
+                        <p class="fragment">LIRE ET DÉCODER LE BYTECODE</p>
+                        <pre class="fragment"><code class="custom-code language-cc" data-line-numbers="|4,32|8,31|9-11|12-14|16-18|19-21|22-24|25-27|29-30|" data-trim>
+void Calculator::run()
+{
+    int skip = 0;
+    for(const uint8_t&amp; opcode : _bytecode) {
+        if(skip &gt; 0) {
+            --skip;
+        }
+        else switch(opcode) {
+            case ByteCode::OP_NOP:
+                skip = execute_nop(opcode);
+                break;
+            case ByteCode::OP_I64:
+                skip = execute_i64(opcode);
+                break;
+...
+            case ByteCode::OP_ADD:
+                skip = execute_add(opcode);
+                break;
+            case ByteCode::OP_SUB:
+                skip = execute_sub(opcode);
+                break;
+            case ByteCode::OP_MUL:
+                skip = execute_mul(opcode);
+                break;
+            case ByteCode::OP_DIV:
+                skip = execute_div(opcode);
+                break;
+...
+            default:
+                throw std::runtime_error("unexpected opcode");
+        }
+    }
+}
+                        </code></pre>
+                    </section>
+                    <section>
+                        <h3 class="color-dummies">EXECUTE</h3>
+                        <p class="fragment">EXÉCUTER LES MICRO-INSTRUCTIONS</p>
+                        <pre class="fragment"><code class="custom-code language-cc" data-line-numbers="|1-16|3-11|13|15||20-25|22|24|" data-trim>
+int Calculator::execute_i64(const uint8_t&amp; opcode)
+{
+    int64_t operand = 0;
+    operand = ((operand &lt;&lt; 8) | (&amp;opcode)[8]);
+    operand = ((operand &lt;&lt; 8) | (&amp;opcode)[7]);
+    operand = ((operand &lt;&lt; 8) | (&amp;opcode)[6]);
+    operand = ((operand &lt;&lt; 8) | (&amp;opcode)[5]);
+    operand = ((operand &lt;&lt; 8) | (&amp;opcode)[4]);
+    operand = ((operand &lt;&lt; 8) | (&amp;opcode)[3]);
+    operand = ((operand &lt;&lt; 8) | (&amp;opcode)[2]);
+    operand = ((operand &lt;&lt; 8) | (&amp;opcode)[1]);
+
+    Operators::op_i64(_operands, operand)
+
+    return 8;
+}
+
+...
+
+int Calculator::execute_add(const uint8_t&amp; opcode)
+{
+    Operators::op_add(_operands)
+
+    return 0;
+}
+
+...
+                        </code></pre>
+                    </section>
+                </section>
+<!-- CRÉONS UNE MACHINE VIRTUELLE }}} -->
+<!-- GÉNÉRER DYNAMIQUEMENT DU CODE {{{ -->
+                <section data-background="assets/images/background-1.jpg" data-transition="slide">
+                    <section>
+                        <h2 class="color-dummies">GÉNÉRER DYNAMIQUEMENT DU CODE</h2>
+                        <p><img class="h224" src="assets/images/for-dummies.svg" alt="for dummies"></p>
+                        <p>LA BASE DE LA COMPILATION JIT</p>
+                    </section>
+                    <section>
+                        <h3 class="color-dummies">LE PRINCIPE</h3>
+                        <p class="fragment">UNE RECETTE ÉPROUVÉE</p>
+                        <ul style="list-style-type: square;">
+                            <li class="fragment blur highlight-current-yellow">Allouer une mémoire tampon</li>
+                            <li class="fragment blur highlight-current-yellow">Écrire du code binaire dans ce tampon</li>
+                            <li class="fragment blur highlight-current-yellow" style="list-style: none; margin-left: 1em; font-size: smaller;">↪ Prologue de fonction</li>
+                            <li class="fragment blur highlight-current-yellow" style="list-style: none; margin-left: 1em; font-size: smaller;">↪ Corps de fonction</li>
+                            <li class="fragment blur highlight-current-yellow" style="list-style: none; margin-left: 1em; font-size: smaller;">↪ Épilogue de fonction</li>
+                            <li class="fragment blur highlight-current-yellow">Exécuter le code binaire</li>
+                        </ul>
+                        <p class="fragment">▪ ▪ ▪</p>
+                    </section>
+                    <section>
+                        <h3 class="color-dummies">PARLONS D'ISA</h3>
+                        <p class="fragment"><span class="color-red">I</span>NSTRUCTION <span class="color-red">S</span>ET <span class="color-red">A</span>RCHITECTURE</p>
+                        <p class="fragment">C'est le modèle d'architecture et la description complète<br>d'un microprocesseur ou d'une famille de microprocesseurs</p>
+                        <p class="fragment">▪ ▪ ▪</p>
+                    </section>
+                    <section>
+                        <h3 class="color-dummies">QUE DÉFINIT L'ISA ?</h3>
+                        <p class="fragment">DES SPÉCIFICATIONS COMPLÈTES</p>
+                        <ul style="list-style-type: square;">
+                            <li class="fragment blur highlight-current-yellow">Les registres internes</li>
+                            <li class="fragment blur highlight-current-yellow">Les instructions disponibles</li>
+                            <li class="fragment blur highlight-current-yellow">L'encodage des instructions</li>
+                            <li class="fragment blur highlight-current-yellow">Les modes d'adressage</li>
+                            <li class="fragment blur highlight-current-yellow">Le boutisme</li>
+                            <li class="fragment blur highlight-current-yellow">Etc.</li>
+                        </ul>
+                        <p class="fragment">▪ ▪ ▪</p>
+                    </section>
+                    <section>
+                        <h3 class="color-dummies">PARLONS AUSSI D'ABI</h3>
+                        <p class="fragment"><span class="color-red">A</span>PPLICATION <span class="color-red">B</span>INARY <span class="color-red">I</span>NTERFACE</p>
+                        <p class="fragment">Elle décrit les conventions utilisées par le système d'exploitation<br>et les programmes dans le contexte d'exécution du code binaire</p>
+                        <p class="fragment">Elle est spécifique à un ou plusieurs systèmes d'exploitation<br>et peut être différente pour une même architecture processeur</p>
+                        <p class="fragment">▪ ▪ ▪</p>
+                    </section>
+                    <section>
+                        <h3 class="color-dummies">QUE DÉFINIT L'ABI ?</h3>
+                        <p class="fragment">DES CONVENTIONS D'INTERFACES</p>
+                        <ul style="list-style-type: square;">
+                            <li class="fragment blur highlight-current-yellow">Les types de données</li>
+                            <li class="fragment blur highlight-current-yellow">Le boutisme</li>
+                            <li class="fragment blur highlight-current-yellow">L'utilisation des registres</li>
+                            <li class="fragment blur highlight-current-yellow">Les conventions d'appels aux fonctions</li>
+                            <li class="fragment blur highlight-current-yellow">Comment les arguments sont passés aux fonctions</li>
+                            <li class="fragment blur highlight-current-yellow">Comment les résultats sont renvoyés par les fonctions</li>
+                            <li class="fragment blur highlight-current-yellow">Comment sont propagées les exceptions</li>
+                            <li class="fragment blur highlight-current-yellow">Etc.</li>
+                        </ul>
+                        <p class="fragment">▪ ▪ ▪</p>
+                    </section>
+                    <section>
+                        <h3 class="color-dummies">L'ABI SYSTEM V X86-64</h3>
+                        <p class="fragment">EXTRAITS DE LA SPÉCIFICATION</p>
+                        <p class="fragment is-justified" style="font-size: x-large">This is a 64-bit platform. The stack grows downwards. Parameters to functions are passed in the registers rdi, rsi, rdx, rcx, r8, r9, and further values are passed on the stack in reverse order. Parameters passed on the stack may be modified by the called function. Functions are called using the call instruction that pushes the address of the next instruction to the stack and jumps to the operand. Functions return to the caller using the ret instruction that pops a value from the stack and jump to it. The stack is 16-byte aligned just before the call instruction is called.</p>
+                        <p class="fragment is-justified" style="font-size: x-large">Functions preserve the registers rbx, rsp, rbp, r12, r13, r14, and r15; while rax, rdi, rsi, rdx, rcx, r8, r9, r10, r11 are scratch registers. The return value is stored in the rax register, or if it is a 128-bit value, then the higher 64-bits go in rdx. Optionally, functions push rbp such that the caller-return-rip is 8 bytes above it, and set rbp to the address of the saved rbp. This allows iterating through the existing stack frames. This can be eliminated by specifying the -fomit-frame-pointer GCC option.</p>
+                        <p class="fragment is-justified" style="font-size: x-large">Signal handlers are executed on the same stack, but 128 bytes known as the red zone is subtracted from the stack before anything is pushed to the stack. This allows small leaf functions to use 128 bytes of stack space without reserving stack space by subtracting from the stack pointer. The red zone is well-known to cause problems for x86-64 kernel developers, as the CPU itself doesn't respect the red zone when calling interrupt handlers. This leads to a subtle kernel breakage as the ABI contradicts the CPU behavior. The solution is to build all kernel code with -mno-red-zone or by handling interrupts in kernel mode on another stack than the current (and thus implementing the ABI).</p>
+                        <p class="fragment">▪ ▪ ▪</p>
+                    </section>
+                    <section>
+                        <h3 class="color-dummies">UNE FONCTION MINIMALE EN C++</h3>
+                        <p class="fragment">UNE FONCTION EN APPELANT UNE AUTRE</p>
+                        <pre class="fragment"><code class="custom-code language-cc" data-line-numbers="|6-9|8|1-4|3|" data-trim>
+void hello_world()
+{
+    std::cout &lt;&lt; "Hello World!" &lt;&lt; std::endl;
+}
+
+void function()
+{
+    hello_world();
+}
+                        </code></pre>
+                    </section>
+                    <section>
+                        <h3 class="color-dummies">SON ANATOMIE EN ASSEMBLEUR X86-64</h3>
+                        <p class="fragment">AVEC UN CODE SIMPLE ET NON OPTIMAL</p>
+                        <pre class="fragment"><code class="custom-code language-x86asm" data-line-numbers="|1-6|8-13|15-21|" data-trim>
+; -------------------------------------------------------------------
+; function prolog
+; -------------------------------------------------------------------
+
+push rbp              ; save the base pointer onto the stack
+mov  rbp,rsp          ; load the base pointer with the stack pointer
+
+; -------------------------------------------------------------------
+; function body
+; -------------------------------------------------------------------
+
+mov  rax,hello_world  ; load rax with the hello_world address
+call rax              ; call the address pointed by rax
+
+; -------------------------------------------------------------------
+; function epilog
+; -------------------------------------------------------------------
+
+mov  rsp,rbp          ; restore the stack pointer from the base pointer
+pop  rbp              ; restore the saved base pointer from the stack
+ret                   ; return to the caller
+                        </code></pre>
+                    </section>
+                    <section>
+                        <h3 class="color-dummies">SON CODE BINAIRE X86-64</h3>
+                        <p class="fragment">APRÈS ASSEMBLAGE</p>
+                        <pre class="fragment"><code class="custom-code language-x86asm" data-line-numbers="|1-2|3|4|5-7|" data-trim>
+00: 55                               push   rbp
+01: 48 89 e5                         mov    rbp,rsp
+04: 48 b8 00 11 22 33 44 55 66 77    mov    rax,0x7766554433221100
+0e: ff d0                            call   rax
+10: 48 89 ec                         mov    rsp,rbp
+13: 5d                               pop    rbp
+14: c3                               ret
+                        </code></pre>
+                    </section>
+                    <section>
+                        <h3 class="color-dummies">MAINTENANT GÉNÉRONS LE EN C++</h3>
+                        <div class="r-stack">
+                            <p class="fragment text-overlay">THUG LIFE! 😅</p>
+                            <p class="fragment"><img class="h384 rounded-corners-24" src="assets/images/thug-life.gif" alt="thug life"></p>
+                        </div>
+                    </section>
+                    <section>
+                        <h3 class="color-dummies">MODÉLISONS UN GÉNÉRATEUR DE CODE BINAIRE</h3>
+                        <div class="r-stack">
+                            <pre><code class="custom-code language-cc" data-line-numbers="|3,4-5|30,31-33|26,27-28|3,7-10|3,12-22|3,24|" data-trim>
+class HostCode
+{
+public: // public interface
+    HostCode();
+    virtual ~HostCode();
+
+    void emit_byte(const uint8_t value);
+    void emit_word(const uint16_t value);
+    void emit_long(const uint32_t value);
+    void emit_quad(const uint64_t value);
+
+    void nop();
+    void push_rbp();
+    void mov_rbp_rsp();
+    void sub_rsp_imm08(const uint8_t imm08);
+    void mov_rsp_rbp();
+    void pop_rbp();
+    void ret();
+    void mov_rax_imm64(const uint64_t imm64);
+    void mov_rdi_imm64(const uint64_t imm64);
+    void mov_rsi_imm64(const uint64_t imm64);
+    void call_rax();
+
+    void execute();
+
+private: // private interface
+    void allocate();
+    void deallocate();
+
+private: // private data
+    uint8_t* _buffer;
+    uint8_t* _bufptr;
+    size_t   _length;
+};
+                            </code></pre>
+                        </div>
+                    </section>
+                    <section>
+                        <h3 class="color-dummies">LE CONSTRUCTEUR</h3>
+                        <div class="r-stack">
+                            <pre><code class="custom-code language-cc" data-line-numbers="|1-7|6|9-31|12|21-23|" data-trim>
+HostCode::HostCode()
+    : _buffer(nullptr)
+    , _bufptr(nullptr)
+    , _length(0)
+{
+    allocate();
+}
+
+void HostCode::allocate()
+{
+    if(_length == 0) {
+        const long length = ::sysconf(_SC_PAGESIZE);
+        if(length &gt; 0) {
+            _length = length;
+        }
+        else {
+            throw std::runtime_error("sysconf() has failed");
+        }
+    }
+    if(_buffer == nullptr) {
+        const int prot   = (PROT_READ | PROT_WRITE | PROT_EXEC);
+        const int flags  = (MAP_PRIVATE | MAP_ANONYMOUS);
+        void*     buffer = ::mmap(nullptr, _length, prot, flags, -1, 0);
+        if(buffer != MAP_FAILED) {
+            _buffer = _bufptr = reinterpret_cast&lt;uint8_t*&gt;(buffer);
+        }
+        else {
+            throw std::runtime_error("mmap() has failed");
+        }
+    }
+}
+                            </code></pre>
+                        </div>
+                    </section>
+                    <section>
+                        <h3 class="color-dummies">LE DESTRUCTEUR</h3>
+                        <div class="r-stack">
+                            <pre><code class="custom-code language-cc" data-line-numbers="|1-4|3|6-20|9|" data-trim>
+HostCode::~HostCode()
+{
+    deallocate();
+}
+
+void HostCode::deallocate()
+{
+    if(_buffer != nullptr) {
+        const int rc = ::munmap(_buffer, _length);
+        if(rc == 0) {
+            _buffer = _bufptr = nullptr;
+        }
+        else {
+            throw std::runtime_error("munmap() has failed");
+        }
+    }
+    if(_length != 0) {
+        _length = 0;
+    }
+}
+                            </code></pre>
+                        </div>
+                    </section>
+                    <section>
+                        <h3 class="color-dummies">ÉCRIRE DES DONNÉES DANS LE TAMPON</h3>
+                        <div class="r-stack">
+                            <pre><code class="custom-code language-cc" data-line-numbers="|1-9|11-15|17-23|25-35|" data-trim>
+void HostCode::emit_byte(const uint8_t value)
+{
+    if(_bufptr &lt; (_buffer + _length)) {
+        *_bufptr++ = value;
+    }
+    else {
+        throw std::runtime_error("buffer is full");
+    }
+}
+
+void HostCode::emit_word(const uint16_t value)
+{
+    emit_byte(static_cast&lt;uint8_t&gt;((value &gt;&gt;  0) &amp; 0xff));
+    emit_byte(static_cast&lt;uint8_t&gt;((value &gt;&gt;  8) &amp; 0xff));
+}
+
+void HostCode::emit_long(const uint32_t value)
+{
+    emit_byte(static_cast&lt;uint8_t&gt;((value &gt;&gt;  0) &amp; 0xff));
+    emit_byte(static_cast&lt;uint8_t&gt;((value &gt;&gt;  8) &amp; 0xff));
+    emit_byte(static_cast&lt;uint8_t&gt;((value &gt;&gt; 16) &amp; 0xff));
+    emit_byte(static_cast&lt;uint8_t&gt;((value &gt;&gt; 24) &amp; 0xff));
+}
+
+void HostCode::emit_quad(const uint64_t value)
+{
+    emit_byte(static_cast&lt;uint8_t&gt;((value &gt;&gt;  0) &amp; 0xff));
+    emit_byte(static_cast&lt;uint8_t&gt;((value &gt;&gt;  8) &amp; 0xff));
+    emit_byte(static_cast&lt;uint8_t&gt;((value &gt;&gt; 16) &amp; 0xff));
+    emit_byte(static_cast&lt;uint8_t&gt;((value &gt;&gt; 24) &amp; 0xff));
+    emit_byte(static_cast&lt;uint8_t&gt;((value &gt;&gt; 32) &amp; 0xff));
+    emit_byte(static_cast&lt;uint8_t&gt;((value &gt;&gt; 40) &amp; 0xff));
+    emit_byte(static_cast&lt;uint8_t&gt;((value &gt;&gt; 48) &amp; 0xff));
+    emit_byte(static_cast&lt;uint8_t&gt;((value &gt;&gt; 56) &amp; 0xff));
+}
+                            </code></pre>
+                        </div>
+                    </section>
+                    <section>
+                        <h3 class="color-dummies">GÉNÉRER DES INSTRUCTIONS</h3>
+                        <div class="r-stack">
+                            <pre><code class="custom-code language-cc" data-line-numbers="|1-4|6-11|13-18|20-23|25-28|30-35|" data-trim>
+void HostCode::push_rbp()
+{
+    emit_byte(0x55);
+}
+
+void HostCode::mov_rbp_rsp()
+{
+    emit_byte(0x48);
+    emit_byte(0x89);
+    emit_byte(0xe5);
+}
+
+void HostCode::mov_rsp_rbp()
+{
+    emit_byte(0x48);
+    emit_byte(0x89);
+    emit_byte(0xec);
+}
+
+void HostCode::pop_rbp()
+{
+    emit_byte(0x5d);
+}
+
+void HostCode::ret()
+{
+    emit_byte(0xc3);
+}
+
+void HostCode::mov_rax_imm64(const uint64_t imm64)
+{
+    emit_byte(0x48);
+    emit_byte(0xb8);
+    emit_quad(imm64);
+}
+                            </code></pre>
+                        </div>
+                    </section>
+                    <section>
+                        <h3 class="color-dummies">EXÉCUTER LE CODE DEPUIS LE TAMPON</h3>
+                        <div class="r-stack">
+                            <pre><code class="custom-code language-cc" data-line-numbers="|5|1,5|7-9|10-12|" data-trim>
+using PointerToFunction = void(*)(void);
+
+void HostCode::execute()
+{
+    PointerToFunction function = reinterpret_cast&lt;PointerToFunction&gt;(_buffer);
+
+    if((_buffer != nullptr) &amp;&amp; (_bufptr != nullptr) &amp;&amp; (_buffer &lt; _bufptr)) {
+        (*function)();
+    }
+    else {
+        throw std::runtime_error("cannot execute null buffer");
+    }
+}
+                            </code></pre>
+                        </div>
+                    </section>
+                    <section>
+                        <h3 class="color-dummies">ÉCRIVONS UN PROGRAMME DE TEST</h3>
+                        <pre class="fragment"><code class="custom-code language-cc" data-line-numbers="|1-4|9|11-17|11-12|13-14|15-17|19|" data-trim>
+void hello_world()
+{
+    std::cout &lt;&lt; "Hello World!" &lt;&lt; std::endl;
+}
+
+int main(int argc, char* argv[])
+{
+    try {
+        jit::HostCode hostcode;
+
+        hostcode.push_rbp();
+        hostcode.mov_rbp_rsp();
+        hostcode.mov_rax_imm64(reinterpret_cast&lt;uintptr_t&gt;(&amp;hello_world));
+        hostcode.call_rax();
+        hostcode.mov_rsp_rbp();
+        hostcode.pop_rbp();
+        hostcode.ret();
+
+        hostcode.execute();
+    }
+    catch(const std::runtime_error&amp; e) {
+        std::cerr &lt;&lt; e.what() &lt;&lt; std::endl;
+    }
+    return EXIT_SUCCESS;
+}
+                        </code></pre>
+                    </section>
+                    <section>
+                        <h3 class="color-dummies">TESTONS LE PROGRAMME</h3>
+                        <div class="r-stack">
+                            <pre><code class="custom-code language-console" data-line-numbers="1-4|5-6" data-trim>
+user@host:~$ make
+g++ -c -std=c++14 -g -Og -Wall -I. example1.cc
+g++ -L. -o example1.bin example1.o -lpthread -lm
+=== build ok ===
+user@host:~$ ./example1.bin 
+Hello World!
+                            </code></pre>
+                            <p class="fragment color-chartreuse text-overlay">IT WORKS! 🎉</p>
+                        </div>
+                    </section>
+                    <section>
+                        <h3 class="color-dummies">ANALYSONS AU DEBUGGER</h3>
+                        <div class="r-stack">
+                            <pre><code class="custom-code language-console" data-line-numbers="|1-2|3-4|5-6|8-9|10-11|12-20|13-19|" data-trim>
+user@host:~$ gdb ./example1.bin
+Reading symbols from example1.bin...
+(gdb) break HostCode::execute() 
+Breakpoint 1 at 0x19c0: file example1.cc, line 203.
+(gdb) run
+Starting program: example1.bin 
+
+Breakpoint 1, jit::HostCode::execute (this=this@entry=0x7fffffffdc50) at example1.cc:203
+203	{
+(gdb) set disassembly-flavor intel 
+(gdb) disassemble _buffer,_bufptr
+Dump of assembler code from 0x7ffff7ffa000 to 0x7ffff7ffa015:
+   0x00007ffff7ffa000:	push   rbp
+   0x00007ffff7ffa001:	mov    rbp,rsp
+   0x00007ffff7ffa004:	movabs rax,0x555555555400
+   0x00007ffff7ffa00e:	call   rax
+   0x00007ffff7ffa010:	mov    rsp,rbp
+   0x00007ffff7ffa013:	pop    rbp
+   0x00007ffff7ffa014:	ret    
+End of assembler dump.
+(gdb) continue
+Continuing.
+Hello World!
+[Inferior 1 (process 26251) exited normally]
+(gdb) quit
+                            </code></pre>
+                            <p class="fragment color-chartreuse text-overlay">EASY PEASY 😎</p>
+                        </div>
+                    </section>
+                    <section>
+                        <h3 class="color-dummies">LES BASIC BLOCKS</h3>
+                        <p class="fragment">Un basic block est une séquence de code sans embranchements<br>ayant un seul point d'entrée et un seul point de sortie</p>
+                        <p class="fragment">Ils forment les sommets et les nœuds d'un graphe d'exécution</p>
+                        <p class="fragment">▪ ▪ ▪</p>
+                    </section>
+                    <section>
+                        <h3 class="color-dummies">BASIC BLOCKS · UN EXEMPLE</h3>
+                        <pre class="fragment"><code class="language-cc" data-line-numbers="" data-trim>
+void function()
+{
+    hello_world();
+}
+                        </code></pre>
+                        <p>
+                            <img class="fragment h224" src="assets/images/basic-block1.png" alt="basic block 1">
+                            <img class="fragment h224" src="assets/images/basic-block2.png" alt="basic block 2">
+                        </p>
+                    </section>
+                    <section>
+                        <h3 class="color-dummies">BASIC BLOCKS · UN AUTRE EXEMPLE</h3>
+                        <pre class="fragment"><code class="language-cc" data-line-numbers="" data-trim>
+void function(long count)
+{
+    while(count &gt; 0) {
+        hello_world();
+        --count;
+    }
+}
+                        </code></pre>
+                        <p><img class="fragment h224" src="assets/images/basic-block3.png" alt="basic block 3"></p>
+                    </section>
+                    <section>
+                        <h3 class="color-dummies">MODÉLISONS UN BASIC BLOCK</h3>
+                        <div class="r-stack">
+                            <pre><code class="custom-code language-cc" data-line-numbers="|3,4-5|17,18-20|3,7-10|3,12-15|" data-trim>
+class BasicBlock
+{
+public: // public interface
+    BasicBlock(HostCode&amp; hostcode);
+    virtual ~BasicBlock() = default;
+
+    void reset();
+    void begin();
+    void end();
+    void execute();
+
+    HostCode* operator-&gt;()
+    {
+        return &amp;_hostcode;
+    }
+
+private: // private data
+    HostCode&amp;      _hostcode;
+    const uint8_t* _begin;
+    const uint8_t* _end;
+};
+                            </code></pre>
+                        </div>
+                    </section>
+                    <section>
+                        <h3 class="color-dummies">ÉCRIVONS UN PROGRAMME DE TEST</h3>
+                        <div class="r-stack">
+                            <pre><code class="custom-code language-cc" data-line-numbers="|4-6|8-18|19-29|30-33|" data-trim>
+int main(int argc, char* argv[])
+{
+    try {
+        jit::HostCode hostcode;
+        jit::BasicBlock bb1(hostcode);
+        jit::BasicBlock bb2(hostcode);
+
+        /* initialize basic block 1 */ {
+            bb1.begin();
+            bb1-&gt;push_rbp();
+            bb1-&gt;mov_rbp_rsp();
+            bb1-&gt;mov_rax_imm64(reinterpret_cast&lt;uintptr_t&gt;(&amp;hello_world1));
+            bb1-&gt;call_rax();
+            bb1-&gt;mov_rsp_rbp();
+            bb1-&gt;pop_rbp();
+            bb1-&gt;ret();
+            bb1.end();
+        }
+        /* initialize basic block 2 */ {
+            bb2.begin();
+            bb2-&gt;push_rbp();
+            bb2-&gt;mov_rbp_rsp();
+            bb2-&gt;mov_rax_imm64(reinterpret_cast&lt;uintptr_t&gt;(&amp;hello_world2));
+            bb2-&gt;call_rax();
+            bb2-&gt;mov_rsp_rbp();
+            bb2-&gt;pop_rbp();
+            bb2-&gt;ret();
+            bb2.end();
+        }
+        /* execute all basic blocks */ {
+            bb1.execute();
+            bb2.execute();
+        }
+    }
+    catch(const std::runtime_error&amp; e) {
+        std::cerr &lt;&lt; e.what() &lt;&lt; std::endl;
+    }
+    return EXIT_SUCCESS;
+}
+                            </code></pre>
+                        </div>
+                    </section>
+                    <section>
+                        <h3 class="color-dummies">EXÉCUTONS LE PROGRAMME DE TEST</h3>
+                        <div class="r-stack">
+                            <pre><code class="custom-code language-console" data-line-numbers="1-4|5-7" data-trim>
+user@host:~$ make
+g++ -c -std=c++14 -g -Og -Wall -I. example2.cc
+g++ -L. -o example2.bin example2.o -lpthread -lm
+=== build ok ===
+user@host:~$ ./example2.bin 
+Hello World #1
+Hello World #2
+                            </code></pre>
+                            <p class="fragment color-chartreuse text-overlay">IT WORKS AGAIN! 🥳</p>
+                        </div>
+                    </section>
+                    <section>
+                        <h3 class="color-dummies">ANALYSONS AU DEBUGGER</h3>
+                        <div class="r-stack">
+                            <pre><code class="custom-code language-console" data-line-numbers="|1-2|3-4|5-8|10-11|12-13|14-29|15-21|22-28|" data-trim>
+user@host:~$ gdb ./example2.bin
+Reading symbols from example2.bin...
+(gdb) break HostCode::~HostCode()
+Breakpoint 1 at 0x26ba: HostCode::~HostCode(). (2 locations)
+(gdb) run
+Starting program: example2.bin 
+Hello World #1
+Hello World #2
+
+Breakpoint 1, jit::HostCode::~HostCode (this=0x7fffffffdc10, __in_chrg=&lt;optimized out&gt;) at example2.cc:52
+52	HostCode::~HostCode()
+(gdb) set disassembly-flavor intel
+(gdb) disassemble _buffer,_bufptr
+Dump of assembler code from 0x7ffff7ffa000 to 0x7ffff7ffa02a:
+   0x00007ffff7ffa000:	push   rbp
+   0x00007ffff7ffa001:	mov    rbp,rsp
+   0x00007ffff7ffa004:	movabs rax,0x555555556400
+   0x00007ffff7ffa00e:	call   rax
+   0x00007ffff7ffa010:	mov    rsp,rbp
+   0x00007ffff7ffa013:	pop    rbp
+   0x00007ffff7ffa014:	ret    
+   0x00007ffff7ffa015:	push   rbp
+   0x00007ffff7ffa016:	mov    rbp,rsp
+   0x00007ffff7ffa019:	movabs rax,0x55555555647a
+   0x00007ffff7ffa023:	call   rax
+   0x00007ffff7ffa025:	mov    rsp,rbp
+   0x00007ffff7ffa028:	pop    rbp
+   0x00007ffff7ffa029:	ret    
+End of assembler dump.
+(gdb) continue
+Continuing.
+[Inferior 1 (process 16969) exited normally]
+(gdb) quit
+                            </code></pre>
+                            <p class="fragment color-chartreuse text-overlay">LIKE A BOSS 😎</p>
+                        </div>
+                    </section>
+                </section>
+<!-- GÉNÉRER DYNAMIQUEMENT DU CODE }}} -->
+<!-- FINALISONS LA MACHINE VIRTUELLE {{{ -->
+                <section data-background="assets/images/background-1.jpg" data-transition="slide">
+                    <section>
+                        <h2 class="color-dummies">FINALISONS LA MACHINE VIRTUELLE</h2>
+                        <p><img class="h224" src="assets/images/for-dummies.svg" alt="for dummies"></p>
+                        <p>AJOUTONS LA RECOMPILATION DYNAMIQUE</p>
+                    </section>
+                    <section>
+                        <h3 class="color-dummies">EXÉCUTER OU RECOMPILER</h3>
+                        <p class="fragment">EXÉCUTER LE BYTECODE OU LE CODE NATIF</p>
+                        <pre class="fragment"><code class="custom-code language-cc" data-line-numbers="|3|5|7|9|" data-trim>
+void Calculator::run()
+{
+    if(_function.callable()) {
+        log_trace("the bytecode has already been translated, executing the generated machine code...");
+        _function.execute();
+    }
+    else {
+        log_trace("the bytecode has never been translated, executing bytecode and translating to machine code...");
+        translate();
+    }
+};
+                        </code></pre>
+                    </section>
+                    <section>
+                        <h3 class="color-dummies">FETCH &amp; DECODE</h3>
+                        <p class="fragment">LIRE ET DÉCODER LE BYTECODE</p>
+                        <pre class="fragment"><code class="custom-code language-cc" data-line-numbers="|3,25||10-12|13-15|17-19|" data-trim>
+void Calculator::translate()
+{
+    prolog();
+    int skip = 0;
+    for(const uint8_t&amp; opcode : _bytecode) {
+        if(skip &gt; 0) {
+            --skip;
+        }
+        else switch(opcode) {
+            case ByteCode::OP_NOP:
+                skip = execute_and_compile_nop(opcode);
+                break;
+            case ByteCode::OP_I64:
+                skip = execute_and_compile_i64(opcode);
+                break;
+...
+            case ByteCode::OP_ADD:
+                skip = execute_and_compile_add(opcode);
+                break;
+...
+            default:
+                throw std::runtime_error("unexpected opcode");
+        }
+    }
+    epilog();
+}
+                        </code></pre>
+                    </section>
+                    <section>
+                        <h3 class="color-dummies">FETCH &amp; DECODE</h3>
+                        <p class="fragment">PROLOG &amp; EPILOG</p>
+                        <pre class="fragment"><code class="custom-code language-cc" data-line-numbers="|1-9|11-20|" data-trim>
+void Calculator::prolog()
+{
+    BasicBlock bb;
+    bb.begin(_hostcode.end());
+    _hostcode.push_rbp();
+    _hostcode.mov_rbp_rsp();
+    bb.end(_hostcode.end());
+    _function.add(bb);
+};
+
+void Calculator::epilog()
+{
+    BasicBlock bb;
+    bb.begin(_hostcode.end());
+    _hostcode.mov_rsp_rbp();
+    _hostcode.pop_rbp();
+    _hostcode.ret();
+    bb.end(_hostcode.end());
+    _function.add(bb);
+};
+                        </code></pre>
+                    </section>
+                    <section>
+                        <h3 class="color-dummies">EXECUTE AND COMPILE</h3>
+                        <p class="fragment">EXÉCUTER ET COMPILER LES MICRO-INSTRUCTIONS</p>
+                        <div class="r-stack">
+                            <pre class="fragment"><code class="custom-code language-cc" data-line-numbers="|3-11|12|13|14|" data-trim>
+int Calculator::execute_and_compile_i64(const uint8_t&amp; opcode)
+{
+    int64_t operand = 0;
+    operand = ((operand &lt;&lt; 8) | (&amp;opcode)[8]);
+    operand = ((operand &lt;&lt; 8) | (&amp;opcode)[7]);
+    operand = ((operand &lt;&lt; 8) | (&amp;opcode)[6]);
+    operand = ((operand &lt;&lt; 8) | (&amp;opcode)[5]);
+    operand = ((operand &lt;&lt; 8) | (&amp;opcode)[4]);
+    operand = ((operand &lt;&lt; 8) | (&amp;opcode)[3]);
+    operand = ((operand &lt;&lt; 8) | (&amp;opcode)[2]);
+    operand = ((operand &lt;&lt; 8) | (&amp;opcode)[1]);
+    exec_i64(operand);
+    emit_i64(operand);
+    return 8;
+}
+                            </code></pre>
+                            <pre class="fragment"><code class="custom-code language-cc" data-line-numbers="|1-4|6-16|" data-trim>
+void Calculator::exec_i64(const int64_t operand)
+{
+    Operators::op_i64(_operands, operand)
+}
+
+void Calculator::emit_i64(const int64_t operand)
+{
+    BasicBlock bb;
+    bb.begin(_hostcode.end());
+    _hostcode.mov_rsi_imm64(operand);
+    _hostcode.mov_rdi_imm64(reinterpret_cast&lt;uintptr_t&gt;(&amp;operands));
+    _hostcode.mov_rax_imm64(reinterpret_cast&lt;uintptr_t&gt;(&amp;Operators::op_i64));
+    _hostcode.call_rax();
+    bb.end(_hostcode.end());
+    _function.add(bb);
+}
+                            </code></pre>
+                        </div>
+                    </section>
+                </section>
+<!-- FINALISONS LA MACHINE VIRTUELLE }}} -->
+<!-- LA DÉMO {{{ -->
+                <section data-background="assets/images/background-1.jpg" data-transition="slide">
+                    <section>
+                        <h2 class="color-dummies">LA DÉMO</h2>
+                        <p><img class="h224" src="assets/images/for-dummies.svg" alt="for dummies"></p>
+                        <p>SANS EFFET BONALDI</p>
+                    </section>
+                </section>
+<!-- LA DÉMO }}} -->
+<!-- POUR CONCLURE {{{ -->
+                <section data-background="assets/images/background-1.jpg" data-transition="slide">
+                    <section>
+                        <h2 class="color-dummies">POUR CONCLURE</h2>
+                        <p><img class="h224" src="assets/images/for-dummies.svg" alt="for dummies"></p>
+                        <p>TO INFINITY AND BEYOND!</p>
+                    </section>
+                    <section data-background="assets/images/background-1.jpg" data-transition="zoom">
+                        <h3>POUR ALLER PLUS LOIN</h3>
+                        <p><img class="h512" src="assets/images/o-rly-book.jpg" alt="O'RLY Book"></p>
+                    </section>
+                    <section data-background="assets/images/background-1.jpg" data-transition="zoom">
+                        <h3>LE CODE</h3>
+                        <p><img class="h224" src="assets/images/for-dummies.svg" alt="for dummies"></p>
+                        <table class="about">
+                            <tr>
+                                <td class="is-centered">Retrouvez le code sur mes miroirs</td>
+                            </tr>
+                            <tr>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fab fa-github color-github"></i> github.com/ponceto/rpn-calculator-with-jit</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fab fa-gitlab color-gitlab"></i> gitlab.com/ponceto/rpn-calculator-with-jit</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fab fa-bitbucket color-bitbucket"></i> bitbucket.org/ponceto/rpn-calculator-with-jit</td>
+                            </tr>
+                        </table>
+                    </section>
+                    <section data-background="assets/images/background-1.jpg" data-transition="zoom">
+                        <h3>Olivier Poncet</h3>
+                        <p><img class="h224" src="assets/images/for-dummies.svg" alt="for dummies"></p>
+                        <table class="about">
+                            <tr>
+                                <td class="is-centered" colspan="2"><i class="fas fa-globe color-website"></i> emaxilde.net</td>
+                            </tr>
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fab fa-twitter color-twitter"></i> @ponceto91</td>
+                                <td><i class="fab fa-github color-github"></i> github.com/ponceto/</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fab fa-twitch color-twitch"></i> @ponceto91</td>
+                                <td><i class="fab fa-gitlab color-gitlab"></i> gitlab.com/ponceto/</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fab fa-youtube color-youtube"></i> @ponceto91</td>
+                                <td><i class="fab fa-bitbucket color-bitbucket"></i> bitbucket.org/ponceto/</td>
+                            </tr>
+                        </table>
+                    </section>
+                </section>
+<!-- POUR CONCLURE }}} -->
+            </div>
+        </div>
+        <script src="vendor/reveal.js/dist/reveal.js"></script>
+        <script src="vendor/reveal.js/plugin/zoom/zoom.js"></script>
+        <script src="vendor/reveal.js/plugin/notes/notes.js"></script>
+        <script src="vendor/reveal.js/plugin/search/search.js"></script>
+        <script src="vendor/reveal.js/plugin/markdown/markdown.js"></script>
+        <script src="vendor/reveal.js/plugin/highlight/highlight.js"></script>
+        <script src="vendor/custom/js/custom.js"></script>
+        <script>
+            Reveal.initialize({
+                width: 1280,
+                height: 768,
+                controls: true,
+                progress: true,
+                center: true,
+                hash: true,
+                slideNumber: 'c/t',
+                plugins: [ RevealZoom, RevealNotes, RevealSearch, RevealMarkdown, RevealHighlight ]
+            });
+        </script>
+    </body>
+</html>
