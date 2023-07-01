@@ -25,6 +25,35 @@
                     <p><img src="assets/images/pour-les-nuls.png" alt="pour les nuls"></p>
                 </section>
 <!-- TITRE }}} -->
+<!-- UNE JIT ? {{{ -->
+                <section data-background="assets/images/background-1.jpg" data-transition="slide">
+                    <section>
+                        <h2 class="color-dummies">UNE JIT ?</h2>
+                        <p><img class="h224" src="assets/images/for-dummies.svg" alt="for dummies"></p>
+                        <p>KESAKO ?</p>
+                    </section>
+                    <section>
+                        <h3 class="color-dummies">LA JIT ? KESAKO ?</h3>
+                        <p class="fragment">Acronyme de « Just In Time » compiler, elle permet de :</p>
+                        <ul style="list-style-type: square;">
+                            <li class="fragment blur highlight-current-yellow">de transformer à la volée un langage ou un bytecode en code machine compréhensible par le microprocesseur</li>
+                            <li class="fragment blur highlight-current-yellow">d'augmenter la portabilité en s'affranchissant d'une phase de compilation anticipée vers un code binaire</li>
+                            <li class="fragment blur highlight-current-yellow">d'opérer dans certains cas des optimisations de code machine en fonction du profil d'exécution</li>
+                        </ul>
+                        <p class="fragment">▪ ▪ ▪</p>
+                    </section>
+                    <section>
+                        <h3 class="color-dummies">QUELQUES CAS D'USAGES</h3>
+                        <ul style="list-style-type: square;">
+                            <li class="fragment blur highlight-current-yellow">Accélérer un interpréteur de langage (eg. JavaScript)</li>
+                            <li class="fragment blur highlight-current-yellow">Augmenter les performances de machines virtuelles (eg. Java, C#, ...)</li>
+                            <li class="fragment blur highlight-current-yellow">Faire de la translation dynamique de code (eg. Qemu, émulateurs)</li>
+                            <li class="fragment blur highlight-current-yellow">Créer ex-nihilo un Domain Specific Language performant</li>
+                        </ul>
+                        <p class="fragment">▪ ▪ ▪</p>
+                    </section>
+                </section>
+<!-- UNE JIT ? }}} -->
 <!-- CODE SOURCE, CODE MACHINE ET BYTECODE {{{ -->
                 <section data-background="assets/images/background-1.jpg" data-transition="slide" data-visibility="hidden">
                     <section>
@@ -637,7 +666,7 @@
                     </section>
                     <section>
                         <h3 class="color-dummies">LA CALCULATRICE</h3>
-                        <p class="fragment">C'EST LA MACHINE VIRTUELLE</p>
+                        <p class="fragment">C'EST NOTRE MACHINE VIRTUELLE</p>
                         <pre class="fragment"><code class="custom-code language-cc" data-line-numbers="|3,4-5|17,18-21|3,7|3,9|3,11|3,13|3,15|" data-trim>
 class Calculator
 {
@@ -705,12 +734,22 @@ struct Operators
                     </section>
                     <section>
                         <h3 class="color-dummies">LE BYTECODE</h3>
-                        <p class="fragment">LE PSEUDO CODE MACHINE</p>
+                        <p class="fragment">C'EST LE PSEUDO CODE MACHINE DE NOTRE VM</p>
+                        <ul style="list-style-type: square;">
+                            <li class="fragment blur highlight-current-yellow">Il est indépendant de toute architecture physique</li>
+                            <li class="fragment blur highlight-current-yellow">Chaque pseudo instruction est encodée sur un octet</li>
+                            <li class="fragment blur highlight-current-yellow">Chaque pseudo instruction peut éventuellement avoir des paramètres</li>
+                        </ul>
+                        <p class="fragment">▪ ▪ ▪</p>
+                    </section>
+                    <section>
+                        <h3 class="color-dummies">LE BYTECODE</h3>
+                        <p class="fragment">REPRÉSENTATION EN MÉMOIRE</p>
                         <p class="fragment"><img class="h512" src="assets/images/bytecode.png" alt="bytecode"></p>
                     </section>
                     <section>
                         <h3 class="color-dummies">LE BYTECODE</h3>
-                        <p class="fragment">LE PSEUDO CODE MACHINE</p>
+                        <p class="fragment">LE PSEUDO CODE MACHINE DE NOTRE VM</p>
                         <div class="r-stack">
                             <pre class="fragment"><code class="custom-code language-cc" data-line-numbers="|3,4-5|26,27-29|3,7|3,9-12|3,14-23|" data-trim>
 class ByteCode
@@ -989,7 +1028,7 @@ ret                   ; return to the caller
                         </code></pre>
                     </section>
                     <section>
-                        <h3 class="color-dummies">MAINTENANT GÉNÉRONS LE EN C++</h3>
+                        <h3 class="color-dummies">MAINTENANT GÉNÉRONS DU CODE BINAIRE EN C++</h3>
                         <div class="r-stack">
                             <p class="fragment text-overlay">THUG LIFE! 😅</p>
                             <p class="fragment"><img class="h384 rounded-corners-24" src="assets/images/thug-life.gif" alt="thug life"></p>
@@ -1451,7 +1490,7 @@ Continuing.
                     <section>
                         <h2 class="color-dummies">FINALISONS LA MACHINE VIRTUELLE</h2>
                         <p><img class="h224" src="assets/images/for-dummies.svg" alt="for dummies"></p>
-                        <p>AJOUTONS LA RECOMPILATION DYNAMIQUE</p>
+                        <p>NOUS SAVONS GÉNÉRER ET EXÉCUTER DU CODE BINAIRE<br>AJOUTONS UNE JIT</p>
                     </section>
                     <section>
                         <h3 class="color-dummies">EXÉCUTER OU RECOMPILER</h3>
